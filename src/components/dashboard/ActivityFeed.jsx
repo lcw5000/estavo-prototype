@@ -19,9 +19,9 @@ export default function ActivityFeed() {
     .slice(0, 8)
 
   return (
-    <div className="h-full bg-white border border-rule rounded-xl p-4 overflow-y-auto">
-      <p className="text-[12px] font-semibold text-navy mb-3">Recent activity</p>
-      <div className="space-y-2">
+    <div className="h-full bg-white border border-rule rounded-xl p-4 flex flex-col min-h-0">
+      <p className="text-[12px] font-semibold text-navy mb-3 shrink-0">Recent activity</p>
+      <div className="flex-1 min-h-0 overflow-y-auto space-y-2">
         {sorted.map(item => (
           <div
             key={item.id}

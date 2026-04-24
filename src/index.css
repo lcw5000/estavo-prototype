@@ -41,6 +41,10 @@
   box-sizing: border-box;
 }
 
+html, body, #root {
+  height: 100%;
+}
+
 body {
   font-family: 'DM Sans', system-ui, sans-serif;
   font-size: 15px;
@@ -134,6 +138,10 @@ body {
     font-family: 'DM Sans', system-ui, sans-serif;
   }
 }
+
+/* Safe area insets for iPhone notch / home indicator */
+.safe-top    { padding-top:    env(safe-area-inset-top); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
 
 /* Font scale — applied via html[data-scale] */
 html[data-scale="md"] { zoom: 1.15; }

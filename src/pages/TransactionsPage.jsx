@@ -1,6 +1,6 @@
 // Estavo Prototype — TransactionsPage
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { LayoutGrid, List } from 'lucide-react'
 import { transactions, contacts } from '../data/mockData'
 import TransactionCard from '../components/transactions/TransactionCard'
@@ -18,8 +18,13 @@ function Toast({ msg, onDone }) {
 
 export default function TransactionsPage() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const [view, setView] = useState('card')
   const [showNew, setShowNew] = useState(false)
+
+  useEffect(() => {
+    if (searchParams.get('new') === 'true') setShowNew(true)
+  }, [searchParams])
   const [txList, setTxList] = useState(transactions)
   const [toast, setToast] = useState(null)
 
@@ -89,14 +94,6 @@ export default function TransactionsPage() {
             <List size={14} />
           </button>
         </div>
-      </div>
-
-      {/* New Transaction button */}
-      <div className="flex justify-end mb-4">
-        <button onClick={() => setShowNew(true)}
-          className="px-3 py-1.5 text-sub text-white bg-rust rounded-md font-medium hover:bg-[#B33D24] transition-colors">
-          + New transaction
-        </button>
       </div>
 
       {/* Card view */}

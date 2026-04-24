@@ -37,7 +37,7 @@ function fmtDate(str) {
   return new Date(str + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 }
 
-function DocRow({ doc, onToast }) {
+function DocRow({ doc, onToast, onRequestSig }) {
   const { cls, label } = statusBadge(doc.status)
   const needsAction = ['pending', 'not_started'].includes(doc.status)
   const needsRemind = doc.status === 'sent'
@@ -66,7 +66,7 @@ function DocRow({ doc, onToast }) {
             className="text-[10px] text-slate border border-rule rounded px-2 py-0.5 hover:bg-ui-bg transition-colors">
             Upload
           </button>
-          <button onClick={() => onToast('Signature request sent via SkySlope')}
+          <button onClick={() => onRequestSig?.(doc)}
             className="text-[10px] text-rust border border-rust/30 rounded px-2 py-0.5 hover:bg-[#FDF0EE] transition-colors">
             Request sig
           </button>
@@ -82,7 +82,7 @@ function DocRow({ doc, onToast }) {
   )
 }
 
-function StageGroup({ stage, docs, onToast }) {
+function StageGroup({ stage, docs, onToast, onRequestSig }) {
   const [open, setOpen] = useState(true)
   const complete = docs.filter(d => ['signed', 'received'].includes(d.status)).length
 
@@ -102,14 +102,14 @@ function StageGroup({ stage, docs, onToast }) {
       </button>
       {open && (
         <div className="bg-white rounded-xl border border-rule px-3">
-          {docs.map(doc => <DocRow key={doc.id} doc={doc} onToast={onToast} />)}
+          {docs.map(doc => <DocRow key={doc.id} doc={doc} onToast={onToast} onRequestSig={onRequestSig} />)}
         </div>
       )}
     </div>
   )
 }
 
-export default function DocumentChecklist({ documents, onToast }) {
+export default function DocumentChecklist({ documents, onToast, onRequestSig }) {
   const grouped = STAGE_ORDER.reduce((acc, stage) => {
     const docs = documents.filter(d => d.stage === stage)
     if (docs.length) acc[stage] = docs
@@ -119,7 +119,7 @@ export default function DocumentChecklist({ documents, onToast }) {
   return (
     <div>
       {Object.entries(grouped).map(([stage, docs]) => (
-        <StageGroup key={stage} stage={stage} docs={docs} onToast={onToast} />
+        <StageGroup key={stage} stage={stage} docs={docs} onToast={onToast} onRequestSig={onRequestSig} />
       ))}
     </div>
   )

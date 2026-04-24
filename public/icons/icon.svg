@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#1C3A5E"/>
+  <text x="256" y="340" font-family="Georgia, serif" font-size="280" font-weight="700" text-anchor="middle" fill="white" letter-spacing="-8">E</text>
+  <text x="256" y="340" font-family="Georgia, serif" font-size="280" font-weight="700" text-anchor="middle" fill="none">
+    <tspan fill="#E8391E" dx="0">v</tspan>
+  </text>
+  <!-- Estavo monogram: navy background, white E with rust v accent -->
+  <text x="96" y="340" font-family="Georgia, serif" font-size="280" font-weight="700" fill="white" letter-spacing="2">Esta</text>
+  <text x="390" y="340" font-family="Georgia, serif" font-size="280" font-weight="700" fill="#E8391E">v</text>
+</svg>

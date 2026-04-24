@@ -1,6 +1,6 @@
 // Estavo Prototype — Sidebar
 import { useState, useEffect, useRef } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, Users, TrendingUp,
   FileCheck, CalendarDays, Home,
@@ -8,7 +8,7 @@ import {
   ExternalLink, FolderOpen,
   DollarSign, Target,
   Globe, Settings,
-  ChevronUp, ChevronRight, LogOut, Type,
+  ChevronUp, LogOut, Zap,
 } from 'lucide-react'
 import { agent, transactions } from '../../data/mockData'
 
@@ -19,14 +19,15 @@ const NAV_SECTIONS = [
     label: 'WORKSPACE',
     items: [
       { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard', end: true },
-      { to: '/contacts',  icon: Users,           label: 'Contacts',  badge: 3, badgeColor: 'teal' },
+      { to: '/leads',     icon: Zap,             label: 'Leads',     badge: 3, badgeColor: 'rust' },
+      { to: '/contacts',  icon: Users,           label: 'Contacts' },
       { to: '/pipeline',  icon: TrendingUp,      label: 'Pipeline' },
     ],
   },
   {
-    label: 'TRANSACTIONS',
+    label: 'ACTIVITY',
     items: [
-      { to: '/transactions', icon: FileCheck,    label: 'Active Deals', badge: activeDeals, badgeColor: 'rust' },
+      { to: '/transactions', icon: FileCheck,    label: 'Transactions', badge: activeDeals, badgeColor: 'rust' },
       { to: '/calendar',     icon: CalendarDays, label: 'Calendar' },
       { to: '/showings',     icon: Home,         label: 'Showings', end: true },
     ],
@@ -42,7 +43,7 @@ const NAV_SECTIONS = [
   {
     label: 'CLIENT',
     items: [
-      { to: '/portal/txn-1', icon: ExternalLink, label: 'Portals',   badge: 2, badgeColor: 'teal' },
+      { to: '/portals',       icon: ExternalLink, label: 'Portals',   badge: 2, badgeColor: 'teal' },
       { to: '/documents',    icon: FolderOpen,   label: 'Documents' },
     ],
   },
@@ -62,52 +63,33 @@ const NAV_SECTIONS = [
   },
 ]
 
-const SCALES = [
-  { key: 'sm', label: 'Small' },
-  { key: 'md', label: 'Medium' },
-  { key: 'lg', label: 'Large' },
-  { key: 'xl', label: 'X-Large' },
-]
-
 function AgentMenu() {
-  const [scale, setScale] = useState(() => localStorage.getItem('fontScale') ?? 'sm')
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
-  const [fontSubmenu, setFontSubmenu] = useState(false)
-  const agentRef = useRef(null)
-  const dropdownRef = useRef(null)
-  const [pos, setPos] = useState({ top: 0, left: 0 })
+  const wrapRef = useRef(null)
+  const triggerRef = useRef(null)
 
+  // Apply saved scale on mount
   useEffect(() => {
-    document.documentElement.dataset.scale = scale === 'sm' ? '' : scale
-    localStorage.setItem('fontScale', scale)
-  }, [scale])
+    const saved = localStorage.getItem('fontScale') ?? 'sm'
+    document.documentElement.dataset.scale = saved === 'sm' ? '' : saved
+  }, [])
 
   useEffect(() => {
     function onClickOutside(e) {
-      if (
-        dropdownRef.current && !dropdownRef.current.contains(e.target) &&
-        agentRef.current && !agentRef.current.contains(e.target)
-      ) { setOpen(false); setFontSubmenu(false) }
+      if (wrapRef.current && !wrapRef.current.contains(e.target)) setOpen(false)
     }
     document.addEventListener('mousedown', onClickOutside)
     return () => document.removeEventListener('mousedown', onClickOutside)
   }, [])
 
-  function handleOpen() {
-    if (agentRef.current) {
-      const rect = agentRef.current.getBoundingClientRect()
-      setPos({ top: rect.bottom + 8, left: rect.left })
-    }
-    setOpen(o => !o)
-    setFontSubmenu(false)
-  }
-
-  const scaleLabel = SCALES.find(s => s.key === scale)?.label ?? 'Small'
-
   return (
-    <>
-      <div ref={agentRef} onClick={handleOpen}
-        className="hidden lg:flex px-4 pb-4 items-center gap-2.5 cursor-pointer group">
+    <div ref={wrapRef} className="hidden lg:block relative px-4 pt-4 pb-3">
+      <div
+        ref={triggerRef}
+        onClick={() => setOpen(o => !o)}
+        className="flex items-center gap-2.5 cursor-pointer group"
+      >
         <div
           className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0 ring-2 ring-transparent group-hover:ring-white/20 transition-all"
           style={{ backgroundColor: agent.avatarColor }}
@@ -122,37 +104,52 @@ function AgentMenu() {
       </div>
 
       {open && (
-        <div ref={dropdownRef}
-          className="fixed z-50 bg-white border border-rule rounded-xl shadow-xl overflow-hidden w-48"
-          style={{ top: pos.top, left: pos.left }}>
-          <div className="relative">
-            <button onClick={() => setFontSubmenu(o => !o)}
-              className="w-full flex items-center gap-2.5 px-3 py-2.5 text-[12px] text-navy hover:bg-ui-bg transition-colors">
-              <Type size={13} className="text-ink3 shrink-0" />
-              <span className="flex-1 text-left">Text size</span>
-              <span className="text-[10px] text-ink3">{scaleLabel}</span>
-              <ChevronRight size={11} className={`text-ink3 transition-transform ${fontSubmenu ? 'rotate-90' : ''}`} />
-            </button>
-            {fontSubmenu && (
-              <div className="border-t border-rule">
-                {SCALES.map(s => (
-                  <button key={s.key} onClick={() => { setScale(s.key); setFontSubmenu(false) }}
-                    className={`w-full text-left px-4 py-2 text-[12px] flex items-center justify-between transition-colors ${scale === s.key ? 'text-navy font-semibold bg-ui-bg' : 'text-slate hover:bg-ui-bg'}`}>
-                    {s.label}
-                    {scale === s.key && <span className="text-rust text-[11px]">✓</span>}
-                  </button>
-                ))}
+        <div
+          className="fixed z-50 rounded-xl shadow-xl border border-rule overflow-hidden w-56"
+          style={{
+            top: triggerRef.current?.getBoundingClientRect().bottom + 6,
+            left: triggerRef.current?.getBoundingClientRect().left,
+            backgroundColor: '#ffffff',
+          }}
+        >
+          {/* Agent header */}
+          <div className="px-4 py-3 border-b border-rule bg-[#F8F7F5]">
+            <div className="flex items-center gap-2.5">
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-semibold shrink-0"
+                style={{ backgroundColor: agent.avatarColor }}
+              >
+                {agent.avatar}
               </div>
-            )}
+              <div className="min-w-0">
+                <p className="text-[12px] font-semibold text-navy truncate">{agent.name}</p>
+                <p className="text-[10px] text-ink3 truncate">{agent.brokerage}</p>
+              </div>
+            </div>
           </div>
+
+          {/* Menu items */}
+          <div className="py-1">
+            <button
+              onClick={() => { navigate('/settings'); setOpen(false) }}
+              className="w-full flex items-center gap-2.5 px-4 py-2 text-[12px] text-navy hover:bg-ui-bg transition-colors"
+            >
+              <Settings size={13} className="text-ink3 shrink-0" />
+              Settings
+            </button>
+          </div>
+
           <div className="h-px bg-rule mx-3" />
-          <button className="w-full flex items-center gap-2.5 px-3 py-2.5 text-[12px] text-rust hover:bg-[#FDF0EE] transition-colors">
-            <LogOut size={13} className="shrink-0" />
-            Log out
-          </button>
+
+          <div className="py-1">
+            <button className="w-full flex items-center gap-2.5 px-4 py-2 text-[12px] text-rust hover:bg-[#FDF0EE] transition-colors">
+              <LogOut size={13} className="shrink-0" />
+              Log out
+            </button>
+          </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
 
@@ -182,10 +179,10 @@ function NavItem({ to, icon: Icon, label, badge, badgeColor, end }) {
 export default function Sidebar() {
   return (
     <aside className="hidden md:flex flex-col shrink-0 bg-sidebar h-screen overflow-y-auto md:w-sidebar-sm lg:w-sidebar">
-      <div className="flex items-center justify-center lg:justify-start px-2 lg:px-4 pt-5 pb-3">
-        <span className="font-display text-[20px] text-white tracking-tight">
+      <div className="flex items-center justify-center lg:justify-start px-2 lg:px-4 h-12 shrink-0">
+        <span className="font-display text-[24px] text-white tracking-[0.08em]">
           <span className="lg:hidden text-rust">E</span>
-          <span className="hidden lg:inline">Esta<span className="text-rust">v</span>o</span>
+          <span className="hidden lg:inline">Esta<span style={{ color: '#E8391E' }}>v</span>o</span>
         </span>
       </div>
 

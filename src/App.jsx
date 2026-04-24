@@ -12,6 +12,12 @@ import PortalPage from './pages/PortalPage'
 import TransactionsPage from './pages/TransactionsPage'
 import TransactionDetailPage from './pages/TransactionDetailPage'
 import CalendarPage from './pages/CalendarPage'
+import PipelinePage from './pages/PipelinePage'
+import DocumentsPage from './pages/DocumentsPage'
+import MarketReportsPage from './pages/MarketReportsPage'
+import PortalsPage from './pages/PortalsPage'
+import SettingsPage from './pages/SettingsPage'
+import LeadsPage from './pages/LeadsPage'
 
 const Placeholder = ({ title }) => (
   <div className="text-navy">
@@ -35,6 +41,7 @@ function App() {
         {/* Authenticated app — wrapped in AppShell */}
         <Route element={<AppShell />}>
           <Route path="/dashboard"          element={<DashboardPage />} />
+          <Route path="/leads"              element={<LeadsPage />} />
           <Route path="/contacts"           element={<ContactsPage />} />
           <Route path="/contacts/:id"       element={<ContactsPage />} />
           <Route path="/campaigns"          element={<CampaignsPage />} />
@@ -44,14 +51,14 @@ function App() {
           <Route path="/transactions/:id"   element={<TransactionDetailPage />} />
           <Route path="/calendar"           element={<CalendarPage />} />
           <Route path="/commission"         element={<CommissionPage />} />
-          <Route path="/pipeline"           element={<Placeholder title="Pipeline" />} />
+          <Route path="/pipeline"           element={<PipelinePage />} />
           <Route path="/ai-writer"          element={<Placeholder title="AI Writer" />} />
-          <Route path="/market-reports"     element={<Placeholder title="Market Reports" />} />
-          <Route path="/documents"          element={<Placeholder title="Documents" />} />
+          <Route path="/market-reports"     element={<MarketReportsPage />} />
+          <Route path="/documents"          element={<DocumentsPage />} />
           <Route path="/cap-tracker"        element={<Placeholder title="Cap Tracker" />} />
           <Route path="/idx-site"           element={<Placeholder title="My IDX Site" />} />
-          <Route path="/settings"           element={<Placeholder title="Settings" />} />
-          <Route path="/portals"            element={<Placeholder title="Portals" />} />
+          <Route path="/settings"           element={<SettingsPage />} />
+          <Route path="/portals"            element={<PortalsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -12,7 +12,7 @@ function fmt(dateStr) {
   })
 }
 
-export default function ShowingCard({ showing, onConfirm }) {
+export default function ShowingCard({ showing, onConfirm, isToday = false }) {
   const badge = STATUS[showing.status] ?? STATUS.completed
   const isUpcoming = showing.status !== 'completed'
   const price = showing.propertyPrice
@@ -20,15 +20,28 @@ export default function ShowingCard({ showing, onConfirm }) {
     : null
 
   return (
-    <div className="bg-white border border-rule rounded-xl p-4">
+    <div className={`rounded-xl p-4 ${
+      isToday
+        ? 'bg-[#FDF0EE] border-2 border-rust/40'
+        : 'bg-white border border-rule'
+    }`}>
       <div className="flex items-start gap-3">
         <div className="flex-1">
           <p className="text-[13px] font-semibold text-navy leading-tight">{showing.address}</p>
           {price && <p className="text-[11px] text-ink3 mt-0.5">{price}</p>}
         </div>
         <div className="text-right shrink-0">
-          <p className="text-[11px] font-medium text-navy">{fmt(showing.date)}</p>
-          <p className="text-[10px] text-ink3">{showing.time}</p>
+          {isToday ? (
+            <div className="flex items-center gap-1.5 justify-end">
+              <span className="text-[9px] font-semibold bg-rust text-white px-1.5 py-0.5 rounded">TODAY</span>
+              <p className="text-[11px] font-semibold text-rust">{showing.time}</p>
+            </div>
+          ) : (
+            <>
+              <p className="text-[11px] font-medium text-navy">{fmt(showing.date)}</p>
+              <p className="text-[10px] text-ink3">{showing.time}</p>
+            </>
+          )}
         </div>
       </div>
 

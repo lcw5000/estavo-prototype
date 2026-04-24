@@ -143,6 +143,175 @@ export const contacts = [
     aiSummary: 'Rachel is a dormant lead who signed up for market reports. No property search activity in 90 days. Low score but worth a personal check-in — she has been opening every market report.',
     draftEmail: `Subject: Checking in — Sunset District update\n\nHi Rachel,\n\nIt's been a little while! I hope the market reports have been useful. The Sunset District has actually shifted in buyers' favour over the past few months — inventory is up and there's less competition than this time last year.\n\nIf you're still thinking about a move, it might be worth a fresh conversation. Happy to catch up whenever the timing feels right — no pressure from my end.\n\n— Lee`,
   },
+  {
+    id: 'contact-6',
+    name: 'David & Amy Chen',
+    email: 'd.chen@icloud.com',
+    phone: '(415) 503-9182',
+    type: 'lead',
+    stage: 'new',
+    score: 79,
+    scoreReason: ['Zillow inquiry on 22 Clipper St', 'First-time buyer signal', 'Budget fits listing'],
+    budget: { min: 950000, max: 1150000 },
+    areas: ['Castro', 'Noe Valley'],
+    timeline: '3 months',
+    preApproved: false,
+    source: 'Zillow Premier Agent',
+    tags: ['New lead', 'Buyer', 'Zillow'],
+    avatar: 'DC',
+    avatarColor: '#2E8B74',
+    lastContact: null,
+    lastContactDate: null,
+    aiSummary: 'Fresh Zillow inquiry on 22 Clipper St. Couple, likely first-time buyers. Budget $950K–$1.15M, Castro/Noe Valley focus. Not yet contacted — respond within the hour to stay competitive.',
+    draftEmail: '',
+  },
+  {
+    id: 'contact-7',
+    name: 'Sofia Reyes',
+    email: 'sofia.reyes@gmail.com',
+    phone: '(628) 210-4873',
+    type: 'lead',
+    stage: 'new',
+    score: 62,
+    scoreReason: ['IDX site sign-up — saved 2 listings', 'Timeline unclear', 'No phone contact yet'],
+    budget: { min: 700000, max: 850000 },
+    areas: ['Bernal Heights', 'Glen Park'],
+    timeline: '6 months',
+    preApproved: false,
+    source: 'IDX website',
+    tags: ['New lead', 'Buyer'],
+    avatar: 'SR',
+    avatarColor: '#9A6A10',
+    lastContact: null,
+    lastContactDate: null,
+    aiSummary: 'New IDX website sign-up. Saved 2 listings in Bernal Heights. Mid-range buyer, 6-month timeline. Good candidate for a nurture sequence while you work higher-priority leads.',
+    draftEmail: '',
+  },
+  {
+    id: 'contact-8',
+    name: 'Greg Nakamura',
+    email: 'gnakamura@outlook.com',
+    phone: '(415) 771-3344',
+    type: 'lead',
+    stage: 'new',
+    score: 55,
+    scoreReason: ['Open house sign-in — 88 Sanchez St', 'Engaged in conversation', 'Timeline vague'],
+    budget: { min: 800000, max: 1000000 },
+    areas: ['Castro', 'Mission District'],
+    timeline: 'Flexible',
+    preApproved: false,
+    source: 'Open house',
+    tags: ['New lead', 'Buyer', 'Open house'],
+    avatar: 'GN',
+    avatarColor: '#5A6A8A',
+    lastContact: null,
+    lastContactDate: null,
+    aiSummary: 'Open house sign-in from 88 Sanchez St last weekend. Seemed genuinely interested but non-committal on timeline. Good for a soft follow-up this week.',
+    draftEmail: '',
+  },
+]
+
+// ── LEADS ─────────────────────────────────────────────────────────────────────
+
+export const leads = [
+  // New — uncontacted, received today
+  {
+    id: 'lead-1',
+    contactId: 'contact-6',
+    source: 'zillow',
+    sourceLabel: 'Zillow',
+    status: 'new',
+    receivedAt: '2026-04-24T05:14:00',
+    propertyOfInterest: '22 Clipper St, SF',
+    notes: 'Inquired about 22 Clipper St. Left a phone number. Requested more info.',
+  },
+  {
+    id: 'lead-2',
+    contactId: 'contact-7',
+    source: 'idx',
+    sourceLabel: 'IDX Site',
+    status: 'new',
+    receivedAt: '2026-04-24T01:02:00',
+    propertyOfInterest: '88 Sanchez St, SF',
+    notes: 'Registered on your IDX site. Saved 88 Sanchez St and a listing in Bernal.',
+  },
+  {
+    id: 'lead-3',
+    contactId: 'contact-8',
+    source: 'open_house',
+    sourceLabel: 'Open house',
+    status: 'new',
+    receivedAt: '2026-04-20T14:30:00',
+    propertyOfInterest: '88 Sanchez St, SF',
+    notes: 'Sign-in sheet from Saturday open house. Said they\'re "casually looking."',
+  },
+  // Contacted
+  {
+    id: 'lead-4',
+    contactId: 'contact-2',
+    source: 'zillow',
+    sourceLabel: 'Zillow',
+    status: 'contacted',
+    receivedAt: '2026-04-23T09:26:00',
+    contactedAt: '2026-04-23T09:52:00',
+    responseMinutes: 26,
+    propertyOfInterest: '147 Oak St, SF',
+    notes: 'Called within 30 min. Showed strong interest. Showing scheduled for Sunday.',
+    nextStep: 'Showing Sunday 11am · 22 Clipper St',
+  },
+  {
+    id: 'lead-5',
+    contactId: 'contact-1',
+    source: 'idx',
+    sourceLabel: 'IDX Site',
+    status: 'contacted',
+    receivedAt: '2026-04-17T11:00:00',
+    contactedAt: '2026-04-17T11:45:00',
+    responseMinutes: 45,
+    propertyOfInterest: '147 Oak St, SF',
+    notes: 'Multiple listing views. Emailed and got a reply same day.',
+    nextStep: 'Follow up — no reply in 6 days',
+  },
+  {
+    id: 'lead-6',
+    contactId: 'contact-4',
+    source: 'open_house',
+    sourceLabel: 'Open house',
+    status: 'contacted',
+    receivedAt: '2026-03-15T10:00:00',
+    contactedAt: '2026-03-15T16:00:00',
+    responseMinutes: 360,
+    propertyOfInterest: '22 Clipper St, SF',
+    notes: 'Open house sign-in. Called same evening. Scheduled a follow-up showing.',
+    nextStep: 'Send property matches',
+  },
+  // Qualified
+  {
+    id: 'lead-7',
+    contactId: 'contact-1',
+    source: 'idx',
+    sourceLabel: 'IDX Site',
+    status: 'qualified',
+    receivedAt: '2026-04-17T11:00:00',
+    contactedAt: '2026-04-17T11:45:00',
+    responseMinutes: 45,
+    propertyOfInterest: '147 Oak St, SF',
+    notes: 'Pre-approved at $1.05M. 60-day timeline. Ready to make an offer.',
+    nextStep: 'Draft offer on 147 Oak St',
+  },
+  {
+    id: 'lead-8',
+    contactId: 'contact-5',
+    source: 'referral',
+    sourceLabel: 'Referral',
+    status: 'qualified',
+    receivedAt: '2026-01-22T09:00:00',
+    contactedAt: '2026-01-22T10:30:00',
+    responseMinutes: 90,
+    propertyOfInterest: null,
+    notes: 'Referred by past client. Budget $600K–$800K, Sunset/Richmond. Long timeline but engaged.',
+    nextStep: 'Monthly check-in',
+  },
 ]
 
 export const interactions = [
@@ -221,6 +390,8 @@ export const properties = [
 ]
 
 export const showings = [
+  { id: 'showing-0', contactId: 'contact-1', propertyId: 'prop-3', address: '147 Oak St, SF', date: '2026-04-24', time: '10:30 AM', status: 'confirmed', notes: 'Second showing — client very interested' },
+  { id: 'showing-0b', contactId: 'contact-5', propertyId: 'prop-4', address: '31 States St, SF', date: '2026-04-24', time: '3:00 PM', status: 'pending', notes: 'First showing request via Zillow' },
   { id: 'showing-1', contactId: 'contact-2', propertyId: 'prop-3', address: '22 Clipper St, SF', date: '2026-04-26', time: '2:00 PM', status: 'confirmed', notes: 'Client available Sat/Sun afternoons' },
   { id: 'showing-2', contactId: 'contact-4', propertyId: 'prop-4', address: '88 Sanchez St, SF', date: '2026-04-27', time: '11:00 AM', status: 'pending', notes: 'Awaiting listing agent confirmation' },
   { id: 'showing-3', contactId: 'contact-1', propertyId: 'prop-3', address: '22 Clipper St, SF', date: '2026-04-15', time: '2:00 PM', status: 'completed', feedback: 'Loved the layout but concerned about the upstairs bathroom. May want to renegotiate on price.', aiFlag: 'warning' },
@@ -417,6 +588,85 @@ export const transactions = [
   },
 ]
 
+// ── DOCUMENT TEMPLATES ────────────────────────────────────────────────────────
+
+export const documentTemplates = [
+  { id: 'tpl-1',  name: 'Residential Purchase Agreement (CAR RPA)',  category: 'Purchase',       description: 'Standard California purchase agreement for residential property.', pages: 16 },
+  { id: 'tpl-2',  name: 'Buyer Representation Agreement',            category: 'Representation', description: 'Agreement establishing exclusive representation of a buyer client.', pages: 4 },
+  { id: 'tpl-3',  name: 'Seller Representation Agreement',           category: 'Representation', description: 'Listing agreement establishing exclusive representation of a seller.', pages: 6 },
+  { id: 'tpl-4',  name: 'Counter Offer (CAR CO)',                    category: 'Purchase',       description: 'Standard counter offer form to modify terms of an existing offer.', pages: 2 },
+  { id: 'tpl-5',  name: 'Transfer Disclosure Statement (TDS)',       category: 'Disclosure',     description: 'Seller-required disclosure of known property defects and conditions.', pages: 3 },
+  { id: 'tpl-6',  name: 'Natural Hazard Disclosure (NHD)',           category: 'Disclosure',     description: 'Disclosure of natural hazard zones affecting the property.', pages: 2 },
+  { id: 'tpl-7',  name: 'Lead-Based Paint Disclosure',              category: 'Disclosure',     description: 'Federal disclosure required for homes built before 1978.', pages: 1 },
+  { id: 'tpl-8',  name: 'Request for Repairs (RR)',                  category: 'Contingency',    description: 'Buyer request for seller to make repairs or provide credits post-inspection.', pages: 2 },
+  { id: 'tpl-9',  name: 'Contingency Removal Form (CR)',             category: 'Contingency',    description: 'Removes one or more contingencies from an accepted purchase agreement.', pages: 1 },
+  { id: 'tpl-10', name: 'Loan Contingency Removal',                 category: 'Contingency',    description: 'Removes the financing contingency once loan approval is confirmed.', pages: 1 },
+  { id: 'tpl-11', name: 'Escrow Instructions',                      category: 'Closing',        description: 'Instructions to escrow officer for handling funds and title transfer.', pages: 5 },
+  { id: 'tpl-12', name: 'Commission Disbursement Authorization',    category: 'Closing',        description: 'Authorises escrow to pay commission from sale proceeds.', pages: 1 },
+  { id: 'tpl-13', name: 'Closing Disclosure',                       category: 'Closing',        description: 'Final summary of loan terms, closing costs, and cash to close.', pages: 5 },
+  { id: 'tpl-14', name: 'Statewide Buyer & Seller Advisory (SBSA)', category: 'Disclosure',     description: 'Advisory covering common issues buyers and sellers should understand.', pages: 12 },
+]
+
+// ── SIGNATURE ENVELOPES ───────────────────────────────────────────────────────
+
+export const envelopes = [
+  {
+    id: 'env-1',
+    txId: 'txn-1',
+    name: 'Contingency Package',
+    status: 'partial', // draft | sent | partial | complete | voided
+    docusealId: 'dse_abc123',
+    sentAt: '2026-04-20T09:00:00',
+    completedAt: null,
+    expiresAt: '2026-05-04T23:59:59',
+    documentIds: ['doc-6', 'doc-7'],
+    documentNames: ['Home Inspection Report', 'Request for Repairs / Credits'],
+    signers: [
+      { id: 'sgn-1', name: 'James Park', email: 'james.park@gmail.com', role: 'Buyer', status: 'signed', signedAt: '2026-04-20T14:23:00' },
+      { id: 'sgn-2', name: 'Linda Park', email: 'linda.park@gmail.com', role: 'Co-Buyer', status: 'pending', signedAt: null },
+      { id: 'sgn-3', name: 'Lee (You)', email: 'lee@remax.com', role: 'Agent', status: 'pending', signedAt: null, isAgent: true },
+    ],
+    message: 'Please review and sign the contingency documents at your earliest convenience.',
+  },
+  {
+    id: 'env-2',
+    txId: 'txn-1',
+    name: 'Purchase Agreement Package',
+    status: 'complete',
+    docusealId: 'dse_ghi789',
+    sentAt: '2026-04-10T11:00:00',
+    completedAt: '2026-04-10T18:30:00',
+    expiresAt: null,
+    documentIds: ['doc-2'],
+    documentNames: ['Residential Purchase Agreement (CAR RPA)'],
+    signers: [
+      { id: 'sgn-7', name: 'James Park', email: 'james.park@gmail.com', role: 'Buyer', status: 'signed', signedAt: '2026-04-10T14:00:00' },
+      { id: 'sgn-8', name: 'Linda Park', email: 'linda.park@gmail.com', role: 'Co-Buyer', status: 'signed', signedAt: '2026-04-10T14:30:00' },
+      { id: 'sgn-9', name: 'Robert Wallace', email: 'rwallace@gmail.com', role: 'Seller', status: 'signed', signedAt: '2026-04-10T17:00:00' },
+      { id: 'sgn-10', name: 'Susan Wallace', email: 'swallace@gmail.com', role: 'Co-Seller', status: 'signed', signedAt: '2026-04-10T18:30:00' },
+    ],
+    message: '',
+  },
+  {
+    id: 'env-3',
+    txId: 'txn-1',
+    name: 'Buyer Representation Agreement',
+    status: 'complete',
+    docusealId: 'dse_def456',
+    sentAt: '2026-04-01T10:00:00',
+    completedAt: '2026-04-01T16:45:00',
+    expiresAt: null,
+    documentIds: ['doc-1'],
+    documentNames: ['Buyer Representation Agreement'],
+    signers: [
+      { id: 'sgn-4', name: 'James Park', email: 'james.park@gmail.com', role: 'Buyer', status: 'signed', signedAt: '2026-04-01T14:30:00' },
+      { id: 'sgn-5', name: 'Linda Park', email: 'linda.park@gmail.com', role: 'Co-Buyer', status: 'signed', signedAt: '2026-04-01T15:00:00' },
+      { id: 'sgn-6', name: 'Lee (You)', email: 'lee@remax.com', role: 'Agent', status: 'signed', signedAt: '2026-04-01T16:45:00', isAgent: true },
+    ],
+    message: '',
+  },
+]
+
 // ── COMMISSIONS SUMMARY ───────────────────────────────────────────────────────
 
 export const commissionSummary = {
@@ -438,3 +688,78 @@ export const commissionSummary = {
     { id: 'deal-4', address: '88 Noe St, SF', type: 'buy', stage: 'closed', closeDate: '2026-02-28', grossCommission: 18750, netCommission: 15000, status: 'paid' },
   ],
 }
+
+// ── MARKET TRENDS DATA ────────────────────────────────────────────────────────
+
+// months: May 2025 → Apr 2026
+const MONTHS = ['May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr']
+
+function mkt(prices, dom, inv, s2l, closed) {
+  return MONTHS.map((month, i) => ({
+    month,
+    medianPrice: prices[i],
+    daysOnMarket: dom[i],
+    inventory: inv[i],
+    saleToList: s2l[i],
+    closedSales: closed[i],
+  }))
+}
+
+export const marketAreas = [
+  {
+    id: 'sf-overall',
+    label: 'San Francisco',
+    data: mkt(
+      [1310,1325,1340,1355,1330,1295,1280,1270,1305,1340,1365,1380],
+      [12,11,10,11,13,15,16,17,14,12,10,9],
+      [420,438,455,470,445,410,385,365,390,420,448,465],
+      [102,103,104,105,102,100,99,100,102,104,106,107],
+      [198,210,225,218,195,172,155,148,180,205,222,235],
+    ),
+    summary: "San Francisco remains competitive heading into spring 2026. Median prices have recovered from a Q4 dip, up 3.7% since January. Inventory is rising seasonally but demand is absorbing it quickly — days on market dropped to 9, the tightest reading since last summer. Sale-to-list at 107% signals continued overbidding in desirable micro-markets.",
+    yoy: +3.7,
+    domChange: -3,
+  },
+  {
+    id: 'noe-valley',
+    label: 'Noe Valley',
+    data: mkt(
+      [1780,1810,1845,1870,1835,1790,1760,1740,1795,1840,1890,1920],
+      [8,7,7,8,9,11,13,14,10,8,7,6],
+      [55,60,66,68,62,54,48,44,52,58,65,70],
+      [108,110,112,113,109,106,104,105,108,111,114,116],
+      [32,36,40,38,34,28,24,22,30,35,39,43],
+    ),
+    summary: "Noe Valley continues to command a substantial premium over the broader SF market. Median prices hit $1.92M in April — up 7.9% year-over-year — driven by limited inventory and strong buyer demand from tech professionals. Average days on market of 6 is exceptional. Nearly every listing is receiving multiple offers.",
+    yoy: +7.9,
+    domChange: -2,
+  },
+  {
+    id: 'castro',
+    label: 'Castro / Eureka Valley',
+    data: mkt(
+      [1480,1500,1520,1535,1510,1475,1450,1435,1465,1495,1525,1550],
+      [11,10,9,10,12,14,16,17,13,11,9,8],
+      [88,95,102,106,98,87,78,72,82,92,100,108],
+      [104,105,106,107,104,102,101,101,103,105,107,108],
+      [58,65,72,70,62,54,48,45,55,63,70,75],
+    ),
+    summary: "Castro/Eureka Valley is showing solid momentum with median prices up 4.7% year-over-year. The neighborhood benefits from its walkability and proximity to Noe Valley while remaining more attainable. Inventory levels are healthy for buyers, though quality listings are still moving fast at an average of 8 days on market.",
+    yoy: +4.7,
+    domChange: -3,
+  },
+  {
+    id: 'bernal',
+    label: 'Bernal Heights',
+    data: mkt(
+      [1195,1210,1225,1240,1215,1180,1160,1145,1175,1205,1230,1255],
+      [13,12,11,12,14,16,18,19,15,13,11,10],
+      [72,78,85,88,82,72,64,58,66,74,82,90],
+      [103,104,105,106,103,101,100,100,102,104,106,107],
+      [45,50,56,54,48,40,35,32,40,47,53,58],
+    ),
+    summary: "Bernal Heights offers compelling value relative to its neighbors, with median prices up 5.0% year-over-year to $1.255M. The area appeals to buyers seeking outdoor lifestyle amenities — Bernal Hill Park proximity is a consistent driver. Inventory has been ticking up, giving buyers slightly more negotiating room than in Noe Valley or Castro.",
+    yoy: +5.0,
+    domChange: -3,
+  },
+]

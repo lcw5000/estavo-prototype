@@ -17,14 +17,18 @@ function enrich(showing) {
   }
 }
 
+const TODAY = new Date().toISOString().slice(0, 10)
+
 export default function ShowingsPage() {
   const navigate = useNavigate()
   const [params] = useSearchParams()
   const showModal = params.get('schedule') === 'true'
   const [list, setList] = useState(() => showings.map(enrich))
 
-  const upcoming = list.filter(s => s.status === 'confirmed' || s.status === 'pending')
-  const past     = list.filter(s => s.status === 'completed')
+  const active  = list.filter(s => s.status === 'confirmed' || s.status === 'pending')
+  const todayS  = active.filter(s => s.date === TODAY)
+  const comingS = active.filter(s => s.date !== TODAY)
+  const past    = list.filter(s => s.status === 'completed')
 
   function confirm(id) {
     setList(prev => prev.map(s => s.id === id ? { ...s, status: 'confirmed' } : s))
@@ -36,11 +40,27 @@ export default function ShowingsPage() {
 
   return (
     <div className="space-y-5">
-      <div>
-        <p className="text-[10px] uppercase tracking-wider text-ink3 mb-2">Upcoming</p>
-        {upcoming.length ? (
+      {todayS.length > 0 && (
+        <div>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-[10px] uppercase tracking-wider text-ink3">Today</span>
+            <span className="text-[9px] font-semibold bg-rust text-white px-2 py-0.5 rounded-full">
+              {todayS.length} showing{todayS.length !== 1 ? 's' : ''}
+            </span>
+          </div>
           <div className="space-y-3">
-            {upcoming.map(s => <ShowingCard key={s.id} showing={s} onConfirm={() => confirm(s.id)} />)}
+            {todayS.map(s => (
+              <ShowingCard key={s.id} showing={s} isToday onConfirm={() => confirm(s.id)} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div>
+        <p className="text-[10px] uppercase tracking-wider text-ink3 mb-2">Coming up</p>
+        {comingS.length ? (
+          <div className="space-y-3">
+            {comingS.map(s => <ShowingCard key={s.id} showing={s} onConfirm={() => confirm(s.id)} />)}
           </div>
         ) : (
           <p className="text-sub text-slate">No upcoming showings.</p>

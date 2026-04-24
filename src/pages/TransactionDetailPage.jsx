@@ -11,6 +11,8 @@ import PartiesList from '../components/transactions/PartiesList'
 import AiMonitorFeed from '../components/transactions/AiMonitorFeed'
 import NotesPanel from '../components/transactions/NotesPanel'
 import CommissionPanel from '../components/transactions/CommissionPanel'
+import EnvelopesTab from '../components/signatures/EnvelopesTab'
+import SignatureEnvelopeModal from '../components/signatures/SignatureEnvelopeModal'
 
 function fmt(val) {
   if (val == null) return '—'
@@ -45,6 +47,7 @@ export default function TransactionDetailPage() {
   const { id } = useParams()
   const navigate = useNavigate()
   const [toast, setToast] = useState(null)
+  const [sigModalDoc, setSigModalDoc] = useState(null)
 
   const tx = transactions.find(t => t.id === id)
 
@@ -122,7 +125,7 @@ export default function TransactionDetailPage() {
       <div className="flex-1 overflow-hidden">
         <Tabs defaultValue="timeline" className="flex flex-col h-full">
           <TabsList className="bg-ui-bg border-b border-rule rounded-none px-6 justify-start h-auto py-0 shrink-0">
-            {['timeline','documents','deadlines','parties','ai-monitor','notes','commission'].map(tab => (
+            {['timeline','documents','signatures','deadlines','parties','ai-monitor','notes','commission'].map(tab => (
               <TabsTrigger key={tab} value={tab}
                 className="text-[12px] capitalize py-2.5 px-3 rounded-none border-b-2 border-transparent data-[state=active]:border-rust data-[state=active]:text-rust data-[state=active]:bg-transparent data-[state=active]:shadow-none">
                 {tab === 'ai-monitor' ? 'AI Monitor' : tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -136,7 +139,11 @@ export default function TransactionDetailPage() {
             </TabsContent>
 
             <TabsContent value="documents" className="mt-0">
-              <DocumentChecklist documents={tx.documents} onToast={showToast} />
+              <DocumentChecklist documents={tx.documents} onToast={showToast} onRequestSig={doc => setSigModalDoc(doc)} />
+            </TabsContent>
+
+            <TabsContent value="signatures" className="mt-0">
+              <EnvelopesTab transaction={tx} onToast={showToast} />
             </TabsContent>
 
             <TabsContent value="deadlines" className="mt-0">
@@ -163,6 +170,17 @@ export default function TransactionDetailPage() {
       </div>
 
       {toast && <Toast msg={toast} />}
+
+      <SignatureEnvelopeModal
+        open={!!sigModalDoc}
+        onOpenChange={open => !open && setSigModalDoc(null)}
+        transaction={tx}
+        preSelectedDocIds={sigModalDoc ? [sigModalDoc.id] : []}
+        onSent={() => {
+          setSigModalDoc(null)
+          showToast('Envelope sent · signers notified by email')
+        }}
+      />
     </div>
   )
 }
