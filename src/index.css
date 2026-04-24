@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap');
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Brand palette */
+  --color-navy:   #1F2E4A;
+  --color-rust:   #C84B2F;
+  --color-teal:   #1A5C4A;
+  --color-gold:   #C49A3C;
+  /* Text hierarchy */
+  --color-slate:  #4A5568;
+  --color-ink3:   #8A8A8A;
+  /* Surfaces */
+  --color-paper:  #FAF9F6;
+  --color-card:   #FFFFFF;
+  --color-rule:   #E8E4DC;
+  --color-ui-bg:  #F2F0EC;
+  --color-sidebar:#1E1E1E;
+  /* Lead score backgrounds & text */
+  --score-hot-bg:   #FDF0EE;
+  --score-hot-text: #C84B2F;
+  --score-warm-bg:  #FEF8EC;
+  --score-warm-text:#9A6A10;
+  --score-cool-bg:  #EEF2FC;
+  --score-cool-text:#2B4FA0;
+  --score-cold-bg:  #F5F5F5;
+  --score-cold-text:#8A8A8A;
+  /* Layout */
+  --sidebar-width:    200px;
+  --sidebar-width-sm: 44px;
+  --topbar-height:    64px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 15px;
+  background-color: #FAF9F6;
+  color: #1F2E4A;
+  margin: 0;
+  padding: 0;
+}
+
+@layer base {
+  .theme {
+    --font-heading:   var(--font-sans);
+    --font-sans:   'Geist Variable', sans-serif;
+  }
+  :root {
+    --background:   oklch(1 0 0);
+    --foreground:   oklch(0.145 0 0);
+    --card:   oklch(1 0 0);
+    --card-foreground:   oklch(0.145 0 0);
+    --popover:   oklch(1 0 0);
+    --popover-foreground:   oklch(0.145 0 0);
+    --primary:   oklch(0.205 0 0);
+    --primary-foreground:   oklch(0.985 0 0);
+    --secondary:   oklch(0.97 0 0);
+    --secondary-foreground:   oklch(0.205 0 0);
+    --muted:   oklch(0.97 0 0);
+    --muted-foreground:   oklch(0.556 0 0);
+    --accent:   oklch(0.97 0 0);
+    --accent-foreground:   oklch(0.205 0 0);
+    --destructive:   oklch(0.577 0.245 27.325);
+    --border:   oklch(0.922 0 0);
+    --input:   oklch(0.922 0 0);
+    --ring:   oklch(0.708 0 0);
+    --chart-1:   oklch(0.87 0 0);
+    --chart-2:   oklch(0.556 0 0);
+    --chart-3:   oklch(0.439 0 0);
+    --chart-4:   oklch(0.371 0 0);
+    --chart-5:   oklch(0.269 0 0);
+    --radius:   0.625rem;
+    --sidebar:   oklch(0.985 0 0);
+    --sidebar-foreground:   oklch(0.145 0 0);
+    --sidebar-primary:   oklch(0.205 0 0);
+    --sidebar-primary-foreground:   oklch(0.985 0 0);
+    --sidebar-accent:   oklch(0.97 0 0);
+    --sidebar-accent-foreground:   oklch(0.205 0 0);
+    --sidebar-border:   oklch(0.922 0 0);
+    --sidebar-ring:   oklch(0.708 0 0);
+  }
+  .dark {
+    --background:   oklch(0.145 0 0);
+    --foreground:   oklch(0.985 0 0);
+    --card:   oklch(0.205 0 0);
+    --card-foreground:   oklch(0.985 0 0);
+    --popover:   oklch(0.205 0 0);
+    --popover-foreground:   oklch(0.985 0 0);
+    --primary:   oklch(0.922 0 0);
+    --primary-foreground:   oklch(0.205 0 0);
+    --secondary:   oklch(0.269 0 0);
+    --secondary-foreground:   oklch(0.985 0 0);
+    --muted:   oklch(0.269 0 0);
+    --muted-foreground:   oklch(0.708 0 0);
+    --accent:   oklch(0.269 0 0);
+    --accent-foreground:   oklch(0.985 0 0);
+    --destructive:   oklch(0.704 0.191 22.216);
+    --border:   oklch(1 0 0 / 10%);
+    --input:   oklch(1 0 0 / 15%);
+    --ring:   oklch(0.556 0 0);
+    --chart-1:   oklch(0.87 0 0);
+    --chart-2:   oklch(0.556 0 0);
+    --chart-3:   oklch(0.439 0 0);
+    --chart-4:   oklch(0.371 0 0);
+    --chart-5:   oklch(0.269 0 0);
+    --sidebar:   oklch(0.205 0 0);
+    --sidebar-foreground:   oklch(0.985 0 0);
+    --sidebar-primary:   oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground:   oklch(0.985 0 0);
+    --sidebar-accent:   oklch(0.269 0 0);
+    --sidebar-accent-foreground:   oklch(0.985 0 0);
+    --sidebar-border:   oklch(1 0 0 / 10%);
+    --sidebar-ring:   oklch(0.556 0 0);
+  }
+  * {
+    border-color: oklch(0.922 0 0);
+    outline-color: oklch(0.708 0 0 / 50%);
+  }
+  body {
+    background-color: oklch(1 0 0);
+    color: oklch(0.145 0 0);
+  }
+  html {
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+}
+
+/* Font scale — applied via html[data-scale] */
+html[data-scale="md"] { zoom: 1.15; }
+html[data-scale="lg"] { zoom: 1.30; }
+html[data-scale="xl"] { zoom: 1.50; }
+
+@keyframes pageIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.animate-page-in {
+  animation: pageIn 0.15s ease-out;
+}
