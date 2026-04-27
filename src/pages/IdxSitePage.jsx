@@ -1,5 +1,6 @@
 // Estavo Prototype — IdxSitePage
 import { useState } from 'react'
+import { analytics } from '../analytics/track.js'
 import { useNavigate } from 'react-router-dom'
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
@@ -166,8 +167,9 @@ function OverviewTab() {
 function LeadsTab({ onToast }) {
   const [added, setAdded] = useState([])
 
-  function addToCrm(id) {
-    setAdded(prev => [...prev, id])
+  function addToCrm(capture) {
+    setAdded(prev => [...prev, capture.id])
+    analytics.idxLeadAddedToCrm({ captureId: capture.id, area: capture.area, budget: capture.budget })
     onToast('Contact added to CRM')
   }
 
@@ -221,7 +223,7 @@ function LeadsTab({ onToast }) {
                   <td className="px-4 py-3">
                     {!inCrm && (
                       <button
-                        onClick={() => addToCrm(c.id)}
+                        onClick={() => addToCrm(c)}
                         className="text-[10px] font-medium text-white bg-navy px-2.5 py-1 rounded-md hover:bg-[#2A3F5F] transition-colors whitespace-nowrap"
                       >
                         + Add to CRM

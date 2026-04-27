@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChevronLeft, ChevronRight, Plus, Check, Circle } from 'lucide-react'
 import { calendarEvents } from '../data/mockData'
+import { analytics } from '../analytics/track.js'
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
@@ -53,13 +54,18 @@ export default function CalendarPage() {
   }
 
   function toggleTask(id) {
-    setTasks(ts => ts.map(t => t.id === id ? { ...t, done: !t.done } : t))
+    setTasks(ts => {
+      const task = ts.find(t => t.id === id)
+      if (task && !task.done) analytics.taskCompleted({ taskId: id })
+      return ts.map(t => t.id === id ? { ...t, done: !t.done } : t)
+    })
   }
 
   function addTask() {
     const text = newTask.trim()
     if (!text) return
     setTasks(ts => [...ts, { id: Date.now(), text, done: false, due: null }])
+    analytics.taskAdded({ text })
     setNewTask('')
   }
 

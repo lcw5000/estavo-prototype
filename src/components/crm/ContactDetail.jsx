@@ -5,6 +5,7 @@ import { Users, Mail, MessageSquare, Sparkles, Home, Send, FileText, Zap, Plus, 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog'
 import ContactTimeline from './ContactTimeline'
 import { transactions, contactMessages } from '../../data/mockData'
+import { analytics } from '../../analytics/track.js'
 
 function stageLabel(s) {
   return s.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
@@ -140,7 +141,7 @@ function MessagesTab({ contact }) {
             className="flex-1 text-[11px] border border-rule rounded-lg px-2.5 py-2 resize-none focus:outline-none focus:border-navy text-navy placeholder:text-ink3"
           />
           <button
-            onClick={() => setCompose('')}
+            onClick={() => { if (compose.trim()) { analytics.messageSent({ contactId: contact.id, channel: composeType }); setCompose('') } }}
             className="w-8 h-8 rounded-full bg-rust flex items-center justify-center shrink-0"
           >
             <Send size={13} className="text-white" />
@@ -225,7 +226,7 @@ function ConvertModal({ contact, onClose }) {
           Cancel
         </button>
         <button
-          onClick={() => setDone(true)}
+          onClick={() => { analytics.convertToTransactionCompleted({ contactId: contact.id, transactionType: form.type, estimatedPrice: form.price }); setDone(true) }}
           className="px-3 py-1.5 text-[11px] bg-teal text-white rounded-lg hover:bg-[#155040]"
         >
           Create transaction
@@ -249,7 +250,9 @@ export default function ContactDetail({ contact, interactions, autoDraft }) {
   }, [autoDraft, contact?.id])
 
   useEffect(() => {
+    if (!contact) return
     setTab('Overview')
+    analytics.contactViewed({ contactId: contact.id, contactType: contact.type, score: contact.score })
   }, [contact?.id])
 
   if (!contact) {
@@ -304,7 +307,7 @@ export default function ContactDetail({ contact, interactions, autoDraft }) {
           </div>
         ) : (
           <button
-            onClick={() => setConvertOpen(true)}
+            onClick={() => { setConvertOpen(true); analytics.convertToTransactionStarted({ contactId: contact.id }) }}
             className="w-full flex items-center justify-center gap-1.5 px-3 py-2 mb-3 text-[11px] border border-dashed border-teal/50 text-teal rounded-lg hover:bg-[#EEF6F2] transition-colors"
           >
             <Plus size={12} /> Convert to transaction
@@ -319,7 +322,7 @@ export default function ContactDetail({ contact, interactions, autoDraft }) {
             <MessageSquare size={12} /> SMS
           </button>
           <button
-            onClick={() => setDraftOpen(true)}
+            onClick={() => { setDraftOpen(true); analytics.aiDraftOpened({ contactId: contact.id }) }}
             className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] bg-rust text-white rounded-md hover:bg-[#B33D24] transition-colors"
           >
             <Sparkles size={12} /> AI Draft
@@ -327,12 +330,20 @@ export default function ContactDetail({ contact, interactions, autoDraft }) {
         </div>
       </div>
 
+      {/* AI Summary — always visible, above tabs */}
+      {contact.aiSummary && (
+        <div className="bg-navy shrink-0 px-4 py-3">
+          <p className="text-[10px] font-semibold text-white/50 mb-1">✦ AI Summary</p>
+          <p className="text-[11px] text-white/90 leading-relaxed">{contact.aiSummary}</p>
+        </div>
+      )}
+
       {/* Tabs */}
       <div className="flex bg-white border-b border-rule shrink-0">
         {TABS.map(t => (
           <button
             key={t}
-            onClick={() => setTab(t)}
+            onClick={() => { setTab(t); analytics.contactTabSwitched({ contactId: contact.id, tab: t }) }}
             className={`flex-1 py-2.5 text-[11px] font-semibold transition-colors border-b-2 ${
               tab === t
                 ? 'border-rust text-rust'
@@ -365,13 +376,6 @@ export default function ContactDetail({ contact, interactions, autoDraft }) {
             </div>
           </div>
 
-          {contact.aiSummary && (
-            <div className="bg-navy rounded-xl p-4">
-              <p className="text-[10px] font-semibold text-white/60 mb-1.5">✦ AI Summary</p>
-              <p className="text-[11px] text-white/90 leading-relaxed">{contact.aiSummary}</p>
-            </div>
-          )}
-
           <div>
             <p className="text-[10px] uppercase tracking-wider text-ink3 mb-2">Interaction timeline</p>
             <ContactTimeline contactId={contact.id} interactions={interactions} />
@@ -397,7 +401,7 @@ export default function ContactDetail({ contact, interactions, autoDraft }) {
               className="px-3 py-1.5 text-[11px] border border-rule rounded-md text-slate hover:bg-ui-bg">
               Edit draft
             </button>
-            <button onClick={() => setDraftOpen(false)}
+            <button onClick={() => { analytics.aiDraftSent({ contactId: contact.id }); setDraftOpen(false) }}
               className="px-3 py-1.5 text-[11px] bg-rust text-white rounded-md hover:bg-[#B33D24]">
               Send
             </button>

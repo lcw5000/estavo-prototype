@@ -1,5 +1,8 @@
 // Estavo Prototype — App Router
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { trackPage, identifyAgent } from './analytics/track.js'
+import { agent } from './data/mockData'
 import AppShell from './components/layout/AppShell'
 import LoginPage from './pages/LoginPage'
 import OnboardingPage from './pages/OnboardingPage'
@@ -28,9 +31,23 @@ const Placeholder = ({ title }) => (
   </div>
 )
 
+// Fires a page event on every route change and identifies the agent once
+function Analytics() {
+  const location = useLocation()
+  useEffect(() => {
+    identifyAgent(agent.id, { name: agent.name, brokerage: agent.brokerage })
+  }, [])
+  useEffect(() => {
+    const name = location.pathname.replace(/^\//, '') || 'dashboard'
+    trackPage(name, { path: location.pathname })
+  }, [location.pathname])
+  return null
+}
+
 function App() {
   return (
     <BrowserRouter>
+      <Analytics />
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
 

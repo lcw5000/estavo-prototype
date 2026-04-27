@@ -10,8 +10,7 @@ export default function AiIntelPanel({ contact, suggestions }) {
   return (
     <div className="w-[240px] shrink-0 bg-white border-l border-rule flex flex-col overflow-y-auto">
       {/* Score header */}
-      <div className="p-4 text-center shrink-0"
-        style={{ background: 'linear-gradient(135deg, #1a1a2e 0%, #2a1a1a 100%)' }}>
+      <div className="p-4 text-center shrink-0 bg-navy">
         {contact.score != null ? (
           <>
             <p className="font-bold leading-none mb-1 text-rust" style={{ fontSize: '42px' }}>
