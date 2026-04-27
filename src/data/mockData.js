@@ -689,6 +689,70 @@ export const commissionSummary = {
   ],
 }
 
+// ── IDX SITE ──────────────────────────────────────────────────────────────────
+
+function genTraffic() {
+  const days = []
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date('2026-04-27')
+    d.setDate(d.getDate() - i)
+    const dow = d.getDay()
+    const isWeekend = dow === 0 || dow === 6
+    const base = 22 + Math.round((29 - i) * 0.4)
+    const visitors = Math.max(4, base + (isWeekend ? 12 : 0) + Math.round((Math.random() - 0.5) * 10))
+    days.push({ date: d.toISOString().slice(0, 10), visitors })
+  }
+  return days
+}
+
+export const idxSite = {
+  url: 'homes.leechenrealty.com',
+  status: 'live',
+  integration: {
+    provider: 'Spark Platform',
+    brokerage: 'RE/MAX Gold',
+    mlsName: 'San Francisco MLS (SFAR)',
+    status: 'connected',
+    lastSync: '3 minutes ago',
+    listingsAvailable: 1847,
+    coverage: ['San Francisco', 'Marin County', 'East Bay', 'Peninsula'],
+    apiVersion: 'v2.1',
+  },
+  brokeragePortal: {
+    name: 'RE/MAX Gold Agent Portal',
+    url: 'remaxgold.com/agents/leec',
+    leadsRouted: true,
+    note: 'Leads from your brokerage profile are automatically forwarded to Estavo.',
+  },
+  stats: {
+    visitorsMonth: 847,   visitorsDelta: +12,
+    capturesMonth: 23,    capturesDelta: +5,
+    pageviewsMonth: 4210, avgSessionMins: 4.2,
+    savedSearches: 38,    listingViews: 316,
+  },
+  trafficSources: [
+    { label: 'Google search',   pct: 42, color: '#2B4FA0' },
+    { label: 'Direct / bookmark', pct: 28, color: '#1A5C4A' },
+    { label: 'Email campaigns', pct: 18, color: '#C49A3C' },
+    { label: 'Social media',    pct: 12, color: '#C84B2F' },
+  ],
+  recentCaptures: [
+    { id: 'ic-1', name: 'Michael Torres',  email: 'm.torres@gmail.com',  date: '2026-04-26', area: 'Noe Valley',       budget: '$900K–$1.2M', saved: 3, inCrm: false },
+    { id: 'ic-2', name: 'Jennifer Walsh',  email: 'j.walsh@yahoo.com',   date: '2026-04-25', area: 'Castro',            budget: '$800K–$1M',   saved: 1, inCrm: false },
+    { id: 'ic-3', name: 'David & Amy Chen',email: 'dchen@gmail.com',     date: '2026-04-24', area: 'Bernal Heights',    budget: '$750K–$950K', saved: 5, inCrm: true  },
+    { id: 'ic-4', name: 'Robert Kim',      email: 'r.kim@outlook.com',   date: '2026-04-22', area: 'Mission District',  budget: '$700K–$900K', saved: 2, inCrm: false },
+    { id: 'ic-5', name: 'Sarah Patel',     email: 's.patel@gmail.com',   date: '2026-04-20', area: 'Noe Valley',        budget: '$1M–$1.5M',   saved: 4, inCrm: false },
+    { id: 'ic-6', name: 'Marcus Diaz',     email: 'marcus.diaz@gmail.com',date:'2026-04-17', area: 'Noe Valley',        budget: '$900K–$1.1M', saved: 6, inCrm: true  },
+    { id: 'ic-7', name: 'Thomas Reed',     email: 'thomas.reed@yahoo.com',date:'2026-04-10', area: 'Mission District',  budget: '$800K–$1M',   saved: 3, inCrm: true  },
+  ],
+  featuredListings: [
+    { id: 'fl-1', address: '147 Oak St, SF',   price: 985000,  beds: 3, baths: 2, sqft: 1640, views: 142, status: 'active',  featured: true  },
+    { id: 'fl-2', address: '22 Clipper St, SF', price: 1050000, beds: 3, baths: 2, sqft: 1820, views: 98,  status: 'active',  featured: true  },
+    { id: 'fl-3', address: '88 Sanchez St, SF', price: 899000,  beds: 2, baths: 2, sqft: 1240, views: 76,  status: 'active',  featured: false },
+  ],
+  dailyTraffic: genTraffic(),
+}
+
 // ── CAP TRACKER ───────────────────────────────────────────────────────────────
 
 export const capTracker = {
