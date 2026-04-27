@@ -18,6 +18,7 @@ import MarketReportsPage from './pages/MarketReportsPage'
 import PortalsPage from './pages/PortalsPage'
 import SettingsPage from './pages/SettingsPage'
 import LeadsPage from './pages/LeadsPage'
+import CapTrackerPage from './pages/CapTrackerPage'
 
 const Placeholder = ({ title }) => (
   <div className="text-navy">
@@ -55,7 +56,7 @@ function App() {
           <Route path="/ai-writer"          element={<Placeholder title="AI Writer" />} />
           <Route path="/market-reports"     element={<MarketReportsPage />} />
           <Route path="/documents"          element={<DocumentsPage />} />
-          <Route path="/cap-tracker"        element={<Placeholder title="Cap Tracker" />} />
+          <Route path="/cap-tracker"        element={<CapTrackerPage />} />
           <Route path="/idx-site"           element={<Placeholder title="My IDX Site" />} />
           <Route path="/settings"           element={<SettingsPage />} />
           <Route path="/portals"            element={<PortalsPage />} />

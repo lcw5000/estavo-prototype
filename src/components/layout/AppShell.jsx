@@ -14,7 +14,7 @@ const PAGE_CONFIG = {
   '/commission':     { title: 'Commission & Financials' },
   '/pipeline':       { title: 'Pipeline' },
   '/documents':      { title: 'Documents' },
-  '/cap-tracker':    { title: 'Cap Tracker' },
+  '/cap-tracker':    { title: 'Cap Tracker · 2026' },
   '/leads':          { title: 'Leads' },
   '/settings':       { title: 'Settings' },
   '/portals':        { title: 'Portals' },

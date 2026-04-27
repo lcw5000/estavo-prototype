@@ -689,6 +689,40 @@ export const commissionSummary = {
   ],
 }
 
+// ── CAP TRACKER ───────────────────────────────────────────────────────────────
+
+export const capTracker = {
+  brokerageName: 'RE/MAX Gold',
+  capAmount: 24000,
+  capYearStart: '2026-01-01',
+  capYearEnd: '2026-12-31',
+  splitPctPreCap: 20,
+  splitPctPostCap: 0,
+  transactionFee: 295,
+  paidToDate: 12480,
+  projectedCapDate: '2026-09-15',
+  avgDealGCI: 20313,
+  closedDeals: [
+    { id: 'cap-1', address: '22 Clipper St, SF',   closeDate: '2026-01-18', salePrice: 1050000, gci: 21000, brokerageAmt: 4200, agentNet: 16800 },
+    { id: 'cap-2', address: '88 Noe St, SF',        closeDate: '2026-02-28', salePrice: 750000,  gci: 18750, brokerageAmt: 3750, agentNet: 15000 },
+    { id: 'cap-3', address: '302 Castro St, SF',    closeDate: '2026-03-12', salePrice: 850000,  gci: 21250, brokerageAmt: 4250, agentNet: 17000 },
+    { id: 'cap-4', address: 'Referral · M. Torres', closeDate: '2026-04-03', salePrice: null,    gci: 1400,  brokerageAmt: 280,  agentNet: 1120  },
+  ],
+  monthlyActual: [
+    { month: 'Jan', paid: 4200, gci: 21000 },
+    { month: 'Feb', paid: 3750, gci: 18750 },
+    { month: 'Mar', paid: 4250, gci: 21250 },
+    { month: 'Apr', paid: 280,  gci: 1400  },
+  ],
+  monthlyProjected: [
+    { month: 'May', paid: 3200 },
+    { month: 'Jun', paid: 3200 },
+    { month: 'Jul', paid: 3200 },
+    { month: 'Aug', paid: 1920 },
+    { month: 'Sep', paid: 0    },
+  ],
+}
+
 // ── MARKET TRENDS DATA ────────────────────────────────────────────────────────
 
 // months: May 2025 → Apr 2026
