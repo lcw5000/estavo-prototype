@@ -34,7 +34,7 @@ export default function AppShell() {
   const isFullBleed = FULL_BLEED.some(p => pathname.startsWith(p))
 
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-dvh overflow-hidden">
       <Sidebar />
       <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
         <Topbar title={config.title} />
@@ -42,8 +42,8 @@ export default function AppShell() {
           key={pathname}
           className={`flex-1 animate-page-in ${
             isFullBleed
-              ? 'overflow-hidden pb-14 md:pb-0'
-              : 'overflow-y-auto bg-paper px-4 md:px-6 pt-5 md:pt-8 pb-20 md:pb-8'
+              ? 'overflow-hidden pb-20 md:pb-0'
+              : 'overflow-y-auto bg-paper px-4 md:px-6 pt-5 md:pt-8 pb-28 md:pb-8'
           }`}
         >
           <Outlet />

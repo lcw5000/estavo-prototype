@@ -15,9 +15,9 @@ function fmtDate(str) {
   })
 }
 
-// Transactions that have an active portal (non-closed)
+// Transactions that have an active portal (anything not closed/cancelled)
 const portalTxns = transactions.filter(tx =>
-  ['active', 'pending', 'under_contract'].includes(tx.stage ?? tx.status ?? 'active')
+  !['closed', 'cancelled', 'withdrawn'].includes(tx.stage ?? tx.status ?? '')
 )
 
 export default function PortalsPage() {
