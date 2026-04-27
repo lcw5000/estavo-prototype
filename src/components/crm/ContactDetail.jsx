@@ -1,7 +1,7 @@
 // Estavo Prototype — ContactDetail
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Users, Mail, MessageSquare, Sparkles, Home, Send, FileText, Zap, Plus, X } from 'lucide-react'
+import { Users, Mail, MessageSquare, Sparkles, Home, Send, FileText, Zap, Plus, X, ChevronDown } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog'
 import ContactTimeline from './ContactTimeline'
 import { transactions, contactMessages } from '../../data/mockData'
@@ -236,6 +236,55 @@ function ConvertModal({ contact, onClose }) {
   )
 }
 
+function RawDataPanel({ contact }) {
+  const [open, setOpen] = useState(false)
+
+  const fields = [
+    ['ID',            contact.id],
+    ['Type',          contact.type],
+    ['Stage',         contact.stage],
+    ['Score',         contact.score ?? '—'],
+    ['Email',         contact.email],
+    ['Phone',         contact.phone],
+    ['Source',        contact.source ?? '—'],
+    ['Timeline',      contact.timeline ?? '—'],
+    ['Budget min',    contact.budget ? `$${contact.budget.min.toLocaleString()}` : '—'],
+    ['Budget max',    contact.budget ? `$${contact.budget.max.toLocaleString()}` : '—'],
+    ['Pre-approved',  contact.preApproved ? 'Yes' : 'No'],
+    ['Pre-approval $', contact.preApprovalAmount ? `$${contact.preApprovalAmount.toLocaleString()}` : '—'],
+    ['Lender',        contact.lender ?? '—'],
+    ['Areas',         contact.areas?.join(', ') ?? '—'],
+    ['Tags',          contact.tags?.join(', ') ?? '—'],
+    ['Last contact',  contact.lastContactDate ?? '—'],
+    ['Avatar color',  contact.avatarColor ?? '—'],
+  ].filter(([, v]) => v !== '—')
+
+  return (
+    <div className="bg-white rounded-xl border border-rule overflow-hidden">
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center justify-between px-3 py-2.5 text-left"
+      >
+        <span className="text-[10px] uppercase tracking-wider text-ink3 font-semibold">Raw data</span>
+        <ChevronDown
+          size={13}
+          className={`text-ink3 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+        />
+      </button>
+      {open && (
+        <div className="border-t border-rule px-3 divide-y divide-[#F5F5F5]">
+          {fields.map(([label, value]) => (
+            <div key={label} className="flex items-center justify-between py-1.5 gap-3">
+              <span className="text-[10px] text-ink3 shrink-0">{label}</span>
+              <span className="text-[10px] text-navy font-mono text-right break-all">{String(value)}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 const TABS = ['Overview', 'Messages']
 
 export default function ContactDetail({ contact, interactions, autoDraft }) {
@@ -380,6 +429,8 @@ export default function ContactDetail({ contact, interactions, autoDraft }) {
             <p className="text-[10px] uppercase tracking-wider text-ink3 mb-2">Interaction timeline</p>
             <ContactTimeline contactId={contact.id} interactions={interactions} />
           </div>
+
+          <RawDataPanel contact={contact} />
         </div>
       ) : (
         <MessagesTab contact={contact} />
