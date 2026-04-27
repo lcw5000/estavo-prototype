@@ -221,8 +221,10 @@ function LeadCard({ lead, contact, onToast, navigate, showUrgency = false }) {
         )}
       </div>
 
-      {/* Notes */}
-      <p className="text-[11px] text-ink3 leading-relaxed">{lead.notes}</p>
+      {/* AI summary from contact */}
+      {contact.aiSummary && (
+        <p className="text-[11px] text-ink3 leading-relaxed">{contact.aiSummary}</p>
+      )}
 
       {/* Auto-response status — only for new leads */}
       {lead.status === 'new' && (
