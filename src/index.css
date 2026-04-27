@@ -157,3 +157,6 @@ html[data-scale="xl"] { zoom: 1.50; }
 .animate-page-in {
   animation: pageIn 0.15s ease-out;
 }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

@@ -20,6 +20,7 @@ const PAGE_CONFIG = {
   '/portals':        { title: 'Portals' },
   '/market-reports': { title: 'Market Reports' },
   '/idx-site':       { title: 'My IDX Site' },
+  '/analytics':      { title: 'Analytics' },
 }
 
 const FULL_BLEED = ['/contacts', '/campaigns', '/dashboard']

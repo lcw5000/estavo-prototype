@@ -20,6 +20,7 @@ import SettingsPage from './pages/SettingsPage'
 import LeadsPage from './pages/LeadsPage'
 import CapTrackerPage from './pages/CapTrackerPage'
 import IdxSitePage from './pages/IdxSitePage'
+import AnalyticsPage from './pages/AnalyticsPage'
 
 const Placeholder = ({ title }) => (
   <div className="text-navy">
@@ -59,6 +60,7 @@ function App() {
           <Route path="/documents"          element={<DocumentsPage />} />
           <Route path="/cap-tracker"        element={<CapTrackerPage />} />
           <Route path="/idx-site"           element={<IdxSitePage />} />
+          <Route path="/analytics"          element={<AnalyticsPage />} />
           <Route path="/settings"           element={<SettingsPage />} />
           <Route path="/portals"            element={<PortalsPage />} />
         </Route>

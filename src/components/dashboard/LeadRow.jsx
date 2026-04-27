@@ -1,4 +1,5 @@
 // Estavo Prototype — LeadRow
+import { contactTriggers } from '../../data/mockData'
 
 function scoreColors(score) {
   if (score == null)  return { bg: '#EEF2FC', text: '#2B4FA0' }
@@ -8,16 +9,15 @@ function scoreColors(score) {
   return               { bg: '#F5F5F5',  text: '#8A8A8A' }
 }
 
-function chipLabel(score) {
-  if (score == null) return 'Contract'
-  if (score >= 80)   return 'Follow up'
-  if (score >= 60)   return 'Book showing'
-  return 'Nurture'
+const URGENCY_DOT = {
+  hot:  'bg-rust',
+  warm: 'bg-[#C49A3C]',
+  cold: 'bg-[#8A8A8A]',
 }
 
 export default function LeadRow({ contact, onClick }) {
   const { bg, text } = scoreColors(contact.score)
-  const chip = chipLabel(contact.score)
+  const trigger = contactTriggers[contact.id]
 
   return (
     <div
@@ -32,10 +32,17 @@ export default function LeadRow({ contact, onClick }) {
         {contact.avatar}
       </div>
 
-      {/* Name + meta */}
+      {/* Name + trigger or meta */}
       <div className="flex-1 min-w-0">
         <p className="text-[12px] font-medium text-navy leading-tight truncate">{contact.name}</p>
-        <p className="text-[10px] text-ink3 truncate">{contact.lastContact} · {contact.source}</p>
+        {trigger ? (
+          <div className="flex items-center gap-1 mt-0.5">
+            <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${URGENCY_DOT[trigger.urgency] ?? 'bg-slate'}`} />
+            <p className="text-[10px] text-ink3 truncate">{trigger.text}</p>
+          </div>
+        ) : (
+          <p className="text-[10px] text-ink3 truncate">{contact.lastContact} · {contact.source}</p>
+        )}
       </div>
 
       {/* Score badge */}
@@ -47,14 +54,6 @@ export default function LeadRow({ contact, onClick }) {
           {contact.score}
         </span>
       )}
-
-      {/* AI action chip */}
-      <span
-        className="text-[9px] font-semibold px-1.5 py-0.5 rounded-sm text-white shrink-0"
-        style={{ backgroundColor: contact.score == null ? '#1A5C4A' : text }}
-      >
-        {chip}
-      </span>
     </div>
   )
 }

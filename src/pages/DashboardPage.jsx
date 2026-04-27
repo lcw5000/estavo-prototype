@@ -1,6 +1,7 @@
 // Estavo Prototype — DashboardPage
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { kpis, contacts, transactions } from '../data/mockData'
+import { kpis, contacts, transactions, interactions } from '../data/mockData'
 import KpiCard from '../components/dashboard/KpiCard'
 import LeadRow from '../components/dashboard/LeadRow'
 import PipelineChart from '../components/dashboard/PipelineChart'
@@ -19,61 +20,103 @@ function stageLabel(s) {
   return s.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 }
 
+function typeIcon(type) {
+  const map = { email_opened: '✉️', lead_created: '⚡', listing_saved: '🏠', campaign_stat: '📣', document_signed: '✍️', sms_replied: '💬', showing_attended: '🏡' }
+  return map[type] ?? '·'
+}
+
 export default function DashboardPage() {
   const navigate = useNavigate()
+  const [bottomTab, setBottomTab] = useState('deals')
 
   return (
     <>
-      {/* ── Mobile layout (< md) — scrollable single column ── */}
-      <div className="md:hidden h-full overflow-y-auto bg-paper px-4 pt-4 pb-4 space-y-3">
-        {/* KPI 2×2 */}
-        <div className="grid grid-cols-2 gap-2">
-          <KpiCard {...kpis.hotLeads} />
-          <KpiCard {...kpis.pipeline} />
-          <KpiCard {...kpis.gciMonth} />
-          <KpiCard {...kpis.showings} onClick={() => navigate('/showings')} />
+      {/* ── Mobile layout — fixed app panels, zero page scroll ── */}
+      <div className="md:hidden h-full overflow-hidden flex flex-col bg-paper">
+
+        {/* KPI strip — horizontal scroll */}
+        <div className="shrink-0 px-3 pt-3 pb-2">
+          <div className="flex gap-2 overflow-x-auto no-scrollbar">
+            {[
+              { label: 'Hot leads',   value: kpis.hotLeads.value,   delta: kpis.hotLeads.delta,   color: '#C84B2F' },
+              { label: 'Pipeline',    value: kpis.pipeline.value,   delta: kpis.pipeline.delta,   color: '#1A5C4A' },
+              { label: 'GCI — April', value: kpis.gciMonth.value,   delta: kpis.gciMonth.delta,   color: '#2B4FA0' },
+              { label: 'Showings',    value: kpis.showings.value,   delta: kpis.showings.delta,   color: '#C49A3C' },
+            ].map(k => (
+              <div key={k.label} className="bg-white border border-rule rounded-xl px-3 py-2.5 shrink-0 min-w-[110px]">
+                <p className="text-[10px] text-ink3 mb-0.5 whitespace-nowrap">{k.label}</p>
+                <p className="text-[18px] font-semibold leading-tight" style={{ color: k.color }}>{k.value}</p>
+                <p className="text-[10px] text-ink3 mt-0.5">{k.delta}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Priority contacts */}
-        <div className="bg-white border border-rule rounded-xl p-4">
-          <div className="flex items-center justify-between mb-3">
+        {/* Priority contacts — fills remaining space, scrolls internally */}
+        <div className="flex-1 min-h-0 mx-3 bg-white rounded-xl border border-rule flex flex-col overflow-hidden">
+          <div className="shrink-0 px-4 py-2.5 border-b border-rule flex items-center justify-between">
             <p className="text-[12px] font-semibold text-navy">🔥 Priority contacts</p>
-            <button onClick={() => navigate('/contacts')} className="text-[10px] text-rust">View all →</button>
+            <button onClick={() => navigate('/contacts')} className="text-[10px] text-rust">
+              View all →
+            </button>
           </div>
-          {priorityContacts.slice(0, 3).map(contact => (
-            <LeadRow key={contact.id} contact={contact} onClick={id => navigate(`/contacts/${id}`)} />
-          ))}
-        </div>
-
-        {/* Active deals */}
-        <div className="bg-white border border-rule rounded-xl p-4">
-          <div className="flex items-center justify-between mb-3">
-            <p className="text-[12px] font-semibold text-navy">📋 Active deals</p>
-            <button onClick={() => navigate('/transactions')} className="text-[10px] text-rust">View all →</button>
+          <div className="flex-1 overflow-y-auto px-3 py-1">
+            {priorityContacts.map(contact => (
+              <LeadRow key={contact.id} contact={contact} onClick={id => navigate(`/contacts/${id}`)} />
+            ))}
           </div>
-          {transactions.map(tx => (
-            <div
-              key={tx.id}
-              onClick={() => navigate(`/transactions/${tx.id}`)}
-              className="flex items-center gap-3 py-2 border-b border-[#F5F5F5] last:border-0 cursor-pointer"
-            >
-              <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: riskColor(tx.riskLevel) }} />
-              <p className="text-[12px] text-navy font-medium flex-1 truncate">{tx.address}</p>
-              <span className="text-[10px] bg-[#EEF2FC] text-[#2B4FA0] px-2 py-0.5 rounded-full shrink-0">
-                {stageLabel(tx.stage)}
-              </span>
-            </div>
-          ))}
         </div>
 
-        {/* AI panel — compact on mobile */}
-        <div className="bg-white border border-rule rounded-xl p-4">
-          <p className="text-[12px] font-semibold text-navy mb-3">✦ Estavo AI</p>
-          <AiActionsPanel mobile />
-        </div>
+        {/* Bottom tabbed panel — fixed height */}
+        <div className="shrink-0 mx-3 mt-2 mb-2 bg-white rounded-xl border border-rule overflow-hidden" style={{ height: 180 }}>
+          {/* Tab bar */}
+          <div className="flex border-b border-rule">
+            {[['deals', '📋 Deals'], ['activity', '⚡ Activity']].map(([id, label]) => (
+              <button
+                key={id}
+                onClick={() => setBottomTab(id)}
+                className={`flex-1 py-2 text-[11px] font-semibold border-b-2 transition-colors ${
+                  bottomTab === id ? 'border-rust text-rust' : 'border-transparent text-ink3'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
 
-        {/* Activity feed */}
-        <ActivityFeed />
+          {/* Tab content */}
+          <div className="overflow-y-auto" style={{ height: 140 }}>
+            {bottomTab === 'deals' ? (
+              <div className="divide-y divide-[#F5F5F5]">
+                {transactions.map(tx => (
+                  <div
+                    key={tx.id}
+                    onClick={() => navigate(`/transactions/${tx.id}`)}
+                    className="flex items-center gap-3 px-4 py-2.5 cursor-pointer hover:bg-ui-bg transition-colors"
+                  >
+                    <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: riskColor(tx.riskLevel) }} />
+                    <p className="text-[12px] text-navy font-medium flex-1 truncate">{tx.address}</p>
+                    <span className="text-[10px] bg-[#EEF2FC] text-[#2B4FA0] px-2 py-0.5 rounded-full shrink-0">
+                      {stageLabel(tx.stage)}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="divide-y divide-[#F5F5F5]">
+                {interactions.slice(0, 6).map(item => (
+                  <div key={item.id} className="flex items-start gap-2.5 px-4 py-2.5">
+                    <span className="text-[13px] mt-0.5 shrink-0">{typeIcon(item.type)}</span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[11px] text-navy leading-tight truncate">{item.description}</p>
+                      <p className="text-[10px] text-ink3 mt-0.5">{item.timestamp}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* ── Desktop layout (≥ md) — fixed 2-col grid ── */}

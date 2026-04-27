@@ -861,3 +861,117 @@ export const marketAreas = [
     domChange: -3,
   },
 ]
+
+// ── CONTACT MESSAGES (unified inbox threads) ───────────────────────────────────
+
+export const contactMessages = {
+  'contact-1': [
+    { id: 'm1-1', type: 'email', direction: 'out', subject: '147 Oak St — Let\'s talk next steps', body: 'Hi Marcus,\n\nI noticed you\'ve had a very close eye on 147 Oak St — four visits in the last 24 hours tells me something clicked. This one is priced right and sits exactly in the Noe Valley pocket you\'ve been focused on.\n\nI\'d love to get you inside before the weekend. Are you free Friday afternoon or Saturday morning?\n\n— Lee', timestamp: '2026-04-17T11:45:00' },
+    { id: 'm1-2', type: 'event', body: 'Marcus opened email "147 Oak St — Let\'s talk next steps"', timestamp: '2026-04-17T14:22:00' },
+    { id: 'm1-3', type: 'sms', direction: 'out', body: 'Hey Marcus, Lee here. Just wanted to follow up on 147 Oak St — still available and I think it checks all your boxes. Want to see it this weekend?', timestamp: '2026-04-19T10:00:00' },
+    { id: 'm1-4', type: 'sms', direction: 'in', body: 'Yes, Sunday works! 2pm?', timestamp: '2026-04-19T14:00:00' },
+    { id: 'm1-5', type: 'note', body: 'Showing completed Sunday — Marcus liked the layout, asked about the roof age. Seller disclosed 2018 replacement. He said he\'d "think about it" but tone was positive.', timestamp: '2026-04-20T17:00:00' },
+    { id: 'm1-6', type: 'event', body: 'Marcus viewed 147 Oak St on IDX site (4 sessions in 24 hours)', timestamp: '2026-04-23T09:30:00' },
+    { id: 'm1-7', type: 'event', body: 'Opened email "147 Oak St — just reduced"', timestamp: '2026-04-23T09:51:00' },
+  ],
+  'contact-2': [
+    { id: 'm2-1', type: 'event', body: 'New Zillow lead — inquired about 22 Clipper St', timestamp: '2026-04-23T09:26:00' },
+    { id: 'm2-2', type: 'sms', direction: 'out', body: 'Hi Priya, this is Lee Chen from RE/MAX Gold. Thanks for reaching out about 22 Clipper St! It\'s a beautiful home. Are you available for a showing this weekend?', timestamp: '2026-04-23T09:52:00' },
+    { id: 'm2-3', type: 'sms', direction: 'in', body: 'Hi Lee! Yes I\'d love to see it. Sunday morning works best for me. Also interested in 147 Oak if possible?', timestamp: '2026-04-23T10:14:00' },
+    { id: 'm2-4', type: 'sms', direction: 'out', body: 'Perfect! Let\'s do Sunday 11am at 22 Clipper, then swing by Oak St after. I\'ll send a calendar invite. Also — have you started the pre-approval process? Happy to connect you with my preferred lender.', timestamp: '2026-04-23T10:22:00' },
+    { id: 'm2-5', type: 'sms', direction: 'in', body: 'Not yet but yes please! Send me their info', timestamp: '2026-04-23T10:35:00' },
+    { id: 'm2-6', type: 'email', direction: 'out', subject: 'Sunday showings confirmed + lender intro', body: 'Hi Priya,\n\nGreat speaking with you! Confirming Sunday April 26 at 11am for 22 Clipper St, followed by 147 Oak St at 12:30pm.\n\nI\'ve cc\'d Sarah at Bay Area Lending — she\'s fantastic and can usually get pre-approval done in 48 hours.\n\nSee you Sunday!\n— Lee', timestamp: '2026-04-23T10:45:00' },
+  ],
+  'contact-3': [
+    { id: 'm3-1', type: 'email', direction: 'out', subject: 'Offer accepted — next steps for 14 Oak St', body: 'Hi James & Linda,\n\nFantastic news — your offer on 14 Oak St was accepted at $975,000! Here\'s what happens next:\n\n• Earnest money due within 3 business days\n• Home inspection: April 28 at 10am\n• Appraisal: scheduled for early May\n\nI\'ll be uploading the signed purchase agreement to your portal today.\n\n— Lee', timestamp: '2026-04-10T15:00:00' },
+    { id: 'm3-2', type: 'event', body: 'James Park signed Purchase Agreement via portal', timestamp: '2026-04-10T16:45:00' },
+    { id: 'm3-3', type: 'sms', direction: 'out', body: 'Hi James — inspection is confirmed for April 28 at 10am. John Mills is your inspector, very thorough. I\'ll be there with you.', timestamp: '2026-04-14T09:00:00' },
+    { id: 'm3-4', type: 'sms', direction: 'in', body: 'Great, thanks Lee! Linda and I are excited. Should we be there the whole time?', timestamp: '2026-04-14T09:17:00' },
+    { id: 'm3-5', type: 'sms', direction: 'out', body: 'Yes, I\'d recommend it — great learning experience and you can ask questions in real time. Plan for about 3 hours.', timestamp: '2026-04-14T09:25:00' },
+    { id: 'm3-6', type: 'note', body: 'Called to review seller disclosures. Nothing alarming — minor drainage issue noted in 2023, seller says resolved. Advised Parks to ask inspector to check.', timestamp: '2026-04-21T11:00:00' },
+    { id: 'm3-7', type: 'sms', direction: 'out', body: 'Documents are in your portal — seller disclosures ready to review. Nothing concerning but worth reading before Thursday. Let me know if you have questions!', timestamp: '2026-04-23T07:30:00' },
+  ],
+  'contact-4': [
+    { id: 'm4-1', type: 'event', body: 'Open house sign-in — 88 Sanchez St', timestamp: '2026-03-15T10:00:00' },
+    { id: 'm4-2', type: 'sms', direction: 'out', body: 'Hi Thomas, Lee Chen from RE/MAX Gold. Great meeting you at the open house today! Happy to answer any questions about 88 Sanchez or anything else in Mission/Castro.', timestamp: '2026-03-15T18:00:00' },
+    { id: 'm4-3', type: 'sms', direction: 'in', body: 'Hey Lee, thanks for reaching out. Not quite ready yet but keeping an eye on things. I\'ll let you know when the timing is right', timestamp: '2026-03-15T20:00:00' },
+    { id: 'm4-4', type: 'email', direction: 'out', subject: 'A few listings I think you\'ll love', body: 'Hi Thomas,\n\nI noticed you saved a few new listings this week — great taste. I pulled together a handful more in the Mission and Castro that match your criteria closely, including one that\'s not on Zillow yet.\n\nHappy to do a quick tour whenever you\'re ready — no pressure.\n\n— Lee', timestamp: '2026-04-19T10:00:00' },
+    { id: 'm4-5', type: 'event', body: 'Thomas saved 3 listings on IDX site (Mission District, Castro)', timestamp: '2026-04-23T09:00:00' },
+  ],
+  'contact-5': [
+    { id: 'm5-1', type: 'event', body: 'Rachel signed up for Sunset District market reports', timestamp: '2026-01-22T09:00:00' },
+    { id: 'm5-2', type: 'email', direction: 'out', subject: 'Welcome — your Sunset District market updates', body: 'Hi Rachel,\n\nThanks for subscribing! You\'ll get a monthly update on pricing, inventory, and market trends for the Sunset District and Richmond.\n\nFeel free to reach out anytime if you\'d like to chat about what you\'re seeing.\n\n— Lee', timestamp: '2026-01-22T10:00:00' },
+    { id: 'm5-3', type: 'event', body: 'Opened February Market Report', timestamp: '2026-02-15T08:30:00' },
+    { id: 'm5-4', type: 'event', body: 'Opened March Market Report', timestamp: '2026-03-18T11:00:00' },
+    { id: 'm5-5', type: 'event', body: 'Opened April Market Report — Sunset District', timestamp: '2026-04-21T10:00:00' },
+  ],
+}
+
+// ── CONTACT BEHAVIORAL TRIGGERS ────────────────────────────────────────────────
+
+export const contactTriggers = {
+  'contact-1': { text: 'Viewed 147 Oak St today · 4×', urgency: 'hot' },
+  'contact-2': { text: 'New lead · 34 min ago · Zillow', urgency: 'hot' },
+  'contact-4': { text: 'Saved 3 listings · active on IDX', urgency: 'warm' },
+  'contact-5': { text: 'Opened market report · no contact in 91 days', urgency: 'cold' },
+  'contact-6': { text: 'New inquiry · 22 Clipper St · uncontacted', urgency: 'hot' },
+  'contact-7': { text: 'IDX signup · saved 2 listings · uncontacted', urgency: 'warm' },
+}
+
+// ── AGENT ANALYTICS ────────────────────────────────────────────────────────────
+
+export const analytics = {
+  ratios: {
+    ytdGCI: 49920,
+    ytdDeals: 4,
+    avgResponseMin: 26,
+    conversionPct: 9.5,
+    avgDaysToClose: 72,
+    showingToOfferPct: 50,
+    leadToClose: 10.5,
+  },
+  funnel: [
+    { stage: 'Total leads', count: 42, pct: 100 },
+    { stage: 'Contacted',   count: 34, pct: 81  },
+    { stage: 'Qualified',   count: 18, pct: 43  },
+    { stage: 'Showing',     count: 12, pct: 29  },
+    { stage: 'Offer',       count: 6,  pct: 14  },
+    { stage: 'Closed',      count: 4,  pct: 9.5 },
+  ],
+  gciByMonth: [
+    { month: 'Jan', gci: 16800, projected: false },
+    { month: 'Feb', gci: 15000, projected: false },
+    { month: 'Mar', gci: 17000, projected: false },
+    { month: 'Apr', gci: 1120,  projected: false },
+    { month: 'May', gci: 0,     projected: true  },
+    { month: 'Jun', gci: 19500, projected: true  },
+    { month: 'Jul', gci: 16000, projected: true  },
+    { month: 'Aug', gci: 18000, projected: true  },
+  ],
+  leadSources: [
+    { source: 'IDX Website',          leads: 18, closedDeals: 2, gci: 31800, costPerMonth: 99  },
+    { source: 'Zillow Premier Agent', leads: 14, closedDeals: 1, gci: 17000, costPerMonth: 500 },
+    { source: 'Referral',             leads: 6,  closedDeals: 1, gci: 15000, costPerMonth: 0   },
+    { source: 'Open House',           leads: 4,  closedDeals: 0, gci: 0,     costPerMonth: 0   },
+  ],
+  responseTime: [
+    { month: 'Jan', avgMin: 52 },
+    { month: 'Feb', avgMin: 38 },
+    { month: 'Mar', avgMin: 29 },
+    { month: 'Apr', avgMin: 26 },
+  ],
+}
+
+// ── CALENDAR EVENTS (multi-month) ──────────────────────────────────────────────
+
+export const calendarEvents = {
+  '2026-04-23': [{ label: '🔴 Offer deadline — 147 Oak St', type: 'deadline', txId: 'txn-2' }],
+  '2026-04-26': [{ label: '🏠 Showing — Priya · 22 Clipper · 2pm', type: 'showing' }],
+  '2026-04-27': [{ label: '🏠 Showing — Thomas · 88 Sanchez · 11am', type: 'showing' }],
+  '2026-04-28': [{ label: '📋 Inspection — 14 Oak St · 10am', type: 'inspection', txId: 'txn-1' }],
+  '2026-04-30': [{ label: '⚠️ Inspection contingency — 14 Oak St', type: 'deadline', txId: 'txn-1' }],
+  '2026-05-05': [{ label: '📋 Appraisal — 14 Oak St', type: 'inspection', txId: 'txn-1' }],
+  '2026-05-12': [{ label: '🏠 Showing — Rachel Liu · Sunset listings · 1pm', type: 'showing' }],
+  '2026-05-20': [{ label: '✅ Loan docs due — 14 Oak St', type: 'deadline', txId: 'txn-1' }],
+  '2026-06-15': [{ label: '🎉 Closing — 14 Oak St', type: 'closing', txId: 'txn-1' }],
+}

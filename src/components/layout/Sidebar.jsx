@@ -52,6 +52,7 @@ const NAV_SECTIONS = [
     items: [
       { to: '/commission',  icon: DollarSign, label: 'Commission', end: true },
       { to: '/cap-tracker', icon: Target,     label: 'Cap Tracker' },
+      { to: '/analytics',   icon: BarChart2,  label: 'Analytics' },
     ],
   },
   {
