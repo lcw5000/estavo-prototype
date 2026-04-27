@@ -16,15 +16,24 @@ export default function ContactsPage() {
     ? aiSuggestions.filter(s => s.contactId === selectedContact.id)
     : []
 
+  const onSelect = cid => navigate(`/contacts/${cid}`)
+
   return (
-    <div className="flex h-[calc(100vh_-_52px)] overflow-hidden">
-      <ContactList
-        contacts={contacts}
-        selectedId={id ?? null}
-        onSelect={cid => navigate(`/contacts/${cid}`)}
-      />
-      <ContactDetail contact={selectedContact} interactions={interactions} autoDraft={autoDraft} />
-      <AiIntelPanel contact={selectedContact} suggestions={suggestions} />
-    </div>
+    <>
+      {/* Mobile: one panel at a time */}
+      <div className="md:hidden h-full flex flex-col overflow-hidden">
+        {!id
+          ? <ContactList contacts={contacts} selectedId={null} onSelect={onSelect} />
+          : <ContactDetail contact={selectedContact} interactions={interactions} autoDraft={autoDraft} />
+        }
+      </div>
+
+      {/* Desktop: three-panel layout */}
+      <div className="hidden md:flex h-[calc(100vh_-_52px)] overflow-hidden">
+        <ContactList contacts={contacts} selectedId={id ?? null} onSelect={onSelect} />
+        <ContactDetail contact={selectedContact} interactions={interactions} autoDraft={autoDraft} />
+        <AiIntelPanel contact={selectedContact} suggestions={suggestions} />
+      </div>
+    </>
   )
 }

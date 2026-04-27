@@ -34,7 +34,7 @@ export default function ContactList({ contacts, selectedId, onSelect }) {
     .filter(c => c.name.toLowerCase().includes(search.toLowerCase()))
 
   return (
-    <div className="w-[240px] shrink-0 bg-white border-r border-rule flex flex-col overflow-hidden">
+    <div className="w-full md:w-[240px] shrink-0 bg-white border-r border-rule flex flex-col overflow-hidden">
       {/* Header */}
       <div className="px-3 pt-3 pb-2 border-b border-rule">
         <div className="flex items-center justify-between mb-2">
