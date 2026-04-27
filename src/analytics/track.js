@@ -1,56 +1,61 @@
-// Estavo Analytics — RudderStack wrapper
-// Events flow: app → RudderStack Cloud → BigQuery
+// Estavo Analytics — PostHog wrapper
 //
-// To activate: set VITE_RUDDERSTACK_WRITE_KEY and VITE_RUDDERSTACK_DATA_PLANE_URL
-// in .env (local) and Vercel environment variables (production).
-// All calls are no-ops until those vars are present.
+// Structured for easy migration to RudderStack:
+// Only the primitives section (initAnalytics, track, trackPage, identifyAgent)
+// needs to change. All named event functions below are SDK-agnostic.
+//
+// Required env vars:
+//   VITE_POSTHOG_KEY      — project API key (phc_...)
+//   VITE_POSTHOG_HOST     — https://us.i.posthog.com
 
-import * as rudder from 'rudder-sdk-js'
+import posthog from 'posthog-js'
 
-const WRITE_KEY      = import.meta.env.VITE_RUDDERSTACK_WRITE_KEY
-const DATA_PLANE_URL = import.meta.env.VITE_RUDDERSTACK_DATA_PLANE_URL
-const IS_DEV         = import.meta.env.DEV
+const KEY  = import.meta.env.VITE_POSTHOG_KEY
+const HOST = import.meta.env.VITE_POSTHOG_HOST
+const DEV  = import.meta.env.DEV
 
-let ready = false
+// ── Primitives (swap these out when migrating to RudderStack) ─────────────────
 
 export function initAnalytics() {
-  if (!WRITE_KEY || !DATA_PLANE_URL) {
-    if (IS_DEV) console.info('[analytics] no credentials — events logged to console only')
+  if (!KEY || !HOST) {
+    if (DEV) console.info('[analytics] no credentials — events logged to console only')
     return
   }
-  rudder.load(WRITE_KEY, DATA_PLANE_URL, { logLevel: 'ERROR' })
-  rudder.ready(() => { ready = true })
+  posthog.init(KEY, {
+    api_host: HOST,
+    capture_pageview: false,   // we fire page events manually for full control
+    capture_pageleave: true,
+    session_recording: {
+      maskAllInputs: false,    // prototype — see everything
+    },
+  })
 }
 
-// ── Core primitives ──────────────────────────────────────────────────────────
-
 function track(event, props = {}) {
-  const payload = { ...props, platform: 'web', env: IS_DEV ? 'dev' : 'prod' }
-  if (ready) {
-    rudder.track(event, payload)
-  } else if (IS_DEV) {
-    console.log(`%c[track] ${event}`, 'color:#C84B2F;font-weight:bold', payload)
+  if (posthog.__loaded) {
+    posthog.capture(event, props)
+  } else if (DEV) {
+    console.log(`%c[track] ${event}`, 'color:#C84B2F;font-weight:bold', props)
   }
 }
 
 export function trackPage(name, props = {}) {
-  if (ready) {
-    rudder.page('App', name, props)
-  } else if (IS_DEV) {
+  if (posthog.__loaded) {
+    posthog.capture('$pageview', { page_name: name, ...props })
+  } else if (DEV) {
     console.log(`%c[page] ${name}`, 'color:#1A5C4A;font-weight:bold', props)
   }
 }
 
 export function identifyAgent(agentId, traits = {}) {
-  if (ready) {
-    rudder.identify(agentId, traits)
-  } else if (IS_DEV) {
+  if (posthog.__loaded) {
+    posthog.identify(agentId, traits)
+  } else if (DEV) {
     console.log(`%c[identify] ${agentId}`, 'color:#2B4FA0;font-weight:bold', traits)
   }
 }
 
-// ── Named events ─────────────────────────────────────────────────────────────
-// One function per event keeps the schema explicit and searchable.
+// ── Named events (never change these during a migration) ─────────────────────
 
 export const analytics = {
 
@@ -107,7 +112,7 @@ export const analytics = {
     track('task_added', { task_text: text }),
 
   taskCompleted: ({ taskId }) =>
-    track('task_completed', { task_id: taskId }),
+    track('task_completed', { task_id: String(taskId) }),
 
   calendarMonthNavigated: ({ year, month, direction }) =>
     track('calendar_month_navigated', { year, month, direction }),
@@ -122,13 +127,13 @@ export const analytics = {
 
   // ── IDX Site ───────────────────────────────────────────────────────────────
 
-  idxLeadAddedToCrm: ({ captureId, name, area, budget }) =>
+  idxLeadAddedToCrm: ({ captureId, area, budget }) =>
     track('idx_lead_added_to_crm', { capture_id: captureId, area, budget }),
 
   idxTabViewed: ({ tab }) =>
     track('idx_tab_viewed', { tab }),
 
-  // ── Cap Tracker / Commission ────────────────────────────────────────────────
+  // ── Cap Tracker ────────────────────────────────────────────────────────────
 
   capTrackerViewed: () =>
     track('cap_tracker_viewed'),
