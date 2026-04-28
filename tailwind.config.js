@@ -21,7 +21,7 @@ export default {
       },
       fontFamily: {
         sans:    ['DM Sans', 'system-ui', 'sans-serif'],
-        display: ['Playfair Display', 'Georgia', 'serif'],
+        display: ['Cinzel', 'Georgia', 'serif'],
       },
       fontSize: {
         // Estavo type scale
