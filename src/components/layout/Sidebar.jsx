@@ -181,7 +181,7 @@ export default function Sidebar() {
   return (
     <aside className="hidden md:flex flex-col shrink-0 bg-sidebar h-screen overflow-y-auto md:w-sidebar-sm lg:w-sidebar">
       <div className="flex items-center justify-center lg:justify-start px-2 lg:px-4 h-12 shrink-0">
-        <span className="font-display text-[22px] text-white tracking-[0.12em]">
+        <span className="text-[20px] font-semibold text-white tracking-[0.08em]">
           <span className="lg:hidden text-rust">E</span>
           <span className="hidden lg:inline">Esta<span style={{ color: '#E8391E' }}>v</span>o</span>
         </span>
