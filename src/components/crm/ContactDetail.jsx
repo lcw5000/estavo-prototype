@@ -381,9 +381,9 @@ export default function ContactDetail({ contact, interactions, autoDraft }) {
         </div>
       </div>
 
-      {/* AI Summary — always visible, above tabs */}
+      {/* AI Summary — mobile only (desktop uses the RHS AiIntelPanel) */}
       {contact.aiSummary && (
-        <div className="bg-navy shrink-0 px-4 py-3">
+        <div className="md:hidden bg-navy shrink-0 px-4 py-3">
           <p className="text-[10px] font-semibold text-white/50 mb-1">✦ AI Summary</p>
           <p className="text-[11px] text-white/90 leading-relaxed">{contact.aiSummary}</p>
         </div>
